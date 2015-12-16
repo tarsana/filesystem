@@ -155,6 +155,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
         $dir = $this->fs->dir(path('tmp/folder-to-be-created/sub-folder'), true);
         $this->assertTrue($dir instanceof Directory);
         $this->assertEquals('sub-folder', $dir->name());
+        $this->tearDown(); // removes the tmp folder
 
         $dirs = $this->fs->dirs([path('folder4/folder43'), path('folder2')]);
         $this->assertTrue($dirs instanceof Collection);
@@ -162,7 +163,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
 
         $dirs = $this->fs->dirs(); // all directories under root directory
         $this->assertTrue($dirs instanceof Collection);
-        $this->assertEquals(5, $dirs->count());
+        $this->assertEquals(4, $dirs->count());
     }
 
     /**
