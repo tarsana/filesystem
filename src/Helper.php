@@ -17,7 +17,7 @@ class Helper {
      */
     public static function toArray($data, $literalToArray = true, $level = 0)
     {
-        if ($level > 999) {
+        if ($level > 200) {
             throw new HelperException('Error while converting data to array');
         }
         $level += 1;
