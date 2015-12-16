@@ -163,6 +163,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
 
         $dirs = $this->fs->dirs(); // all directories under root directory
         $this->assertTrue($dirs instanceof Collection);
+        var_dump($dirs->names());
         $this->assertEquals(4, $dirs->count());
     }
 
