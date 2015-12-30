@@ -17,44 +17,44 @@ composer require tarsana/io
 
 The `Filesystem` class was designed to be used easily and support call chaining which makes the code more readable.
 
-```php<?
+```php
 // Create a Filesystem instance given a root path
 $fs = new Tarsana\IO\Filesystem('path/to/fs/root/directory');
-?>```
+```
 
 ### Checking Paths
 
 Maybe you need to check if a specific path is a file
 
-```php<?
+```php
 if ($fs->isFile('relative/path'))
-?>```
+```
 
 or a directory
 
-```php<?
+```php
 if ($fs->isDir('relative/path'))
-?>```
+```
 
 or you just want to know it exists, no matter it's a file or directory
 
-```php<?
+```php
 if ($fs->isAny('relative/path'))
-?>```
+```
 
 What if you need to check multiple paths at once ?
 
-```php<?
+```php
 if ($fs->areFiles(['relative/path1', 'relative/path2', 'relative/path3']))
 if ($fs->areDirs(['relative/path1', 'relative/path2', 'relative/path3']))
 if ($fs->areAny(['relative/path1', 'relative/path2', 'relative/path3']))
-?>```
+```
 
 But what if you want to know the type of a path without having to do multiple checks ?
 
-```php<?
+```php
 $fs->whatIs('path-pattern')
-?>```
+```
 
 You can use wildcard pattern as argument to this function and the result will be:
 
@@ -70,17 +70,17 @@ You can use wildcard pattern as argument to this function and the result will be
 
 Now what if you want to get all files and directories corresponding to a pattern ?
 
-```php <?  
+```php  
 $collection = $fs->find('pattern'); // a Collection instance
 
 foreach ($collection->asArray() as $fileOrDir) {
 	// Handle the file or directory
 }
-?>```
+```
 
 You can also manipulate the collection
 
-```php <?
+```php
 $collection->count(); // number of elements
 $collection->add($fs->file('path/to/file')); // add new element to the collection
 $collection->contains('path'); // checks if the collection contains an element with that path
@@ -94,25 +94,25 @@ $collection->last(); // the last element
 
 $collection->paths(); // array of paths of the files and directories
 $collection->names(); // array of names of the files and directories
-?>```
+```
 
 ### Handling Files
 
 Well, to handle a file, you should get it first
 
-```<?  
+```php  
 $file = $fs->file('relative/path/to/file'); 
-?>```
+```
 
 Notice that this will throw an exception if the file is not found. If you want to create it when missing; specify `true` in the second argument 
 
-```<?  
+```php  
 $file = $fs->file('relative/path/to/file', true); 
-?>```
+```
 
 You can also get or create multiple files at once
 
-```<?  
+```php  
 $files = $fs->files([
 	'relative/path/to/file1', 
 	'relative/path/to/file2', 
@@ -122,11 +122,11 @@ $files = $fs->files([
 foreach ($files->asArray() as $file) {
 	// Handle the file
 }
-?>```
+```
 
 Now that you have the file, you can play with it
 
-```<?
+```php
 $file->name(); // get the name
 $file->name('new-name.txt'); // renaming the file
 
@@ -146,7 +146,7 @@ $file->isExecutable(); // check if the file is executable
 
 $copy = $file->copyAs('absolute/path/to/file-copy'); // Copy the file
 $file->remove(); // Remove the file
-?>```
+```
 
 Notice that all setters return the same instance to enable call chaining.
 
@@ -154,7 +154,7 @@ Notice that all setters return the same instance to enable call chaining.
 
 Just like the file, you can get a directory like that
 
-```<?  
+```php  
 $dir = $fs->dir('relative/path/to/dir'); // throws exception if the directory not found
 $dir = $fs->dir('relative/path/to/dir', true); // creates the directory if not found
 $dirs = $fs->dirs([
@@ -162,10 +162,10 @@ $dirs = $fs->dirs([
 	'relative/path/to/file2', 
 	'relative/path/to/file3'
 ]); // a collection containing directories
-?>```
+```
 
 Having a directory, you can play with it
-```<?
+```php
 $dir->name(); // get the name
 $dir->name('new-name'); // renaming the directory
 
@@ -178,19 +178,19 @@ $copy = $dir->copyAs('absolute/path/to/dir-copy'); // Copy the directory
 $dir->remove(); // Remove the directory
 
 $dir->fs(); // get a Filesystem instance having this directory as root
-?>```
+```
 
 Notice that all setters return the same instance to enable call chaining.
 
 ## Parsing and Dumping
 
-```php <?
+```php
 $data = JSON::parse('some json string here');
 $json = JSON::dump($data);
 
 $data = YAML::parse('some YAML string here');
 $yaml = YAML::dump($data);
-?>```
+```
 
 ## Full API Reference
 
