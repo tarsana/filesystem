@@ -15,7 +15,6 @@ class YamlTest extends PHPUnit_Framework_TestCase {
             '  - bar' . PHP_EOL .
             '  - baz' . PHP_EOL
         );
-        var_dump($data);
         $object = [
             'name'    => 'foo',
             'age'     =>  22,
