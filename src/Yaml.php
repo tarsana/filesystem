@@ -24,7 +24,7 @@ class Yaml implements Parser, Dumper {
     public static function parse($str, $config = [])
     {
         try {
-            return (new YamlParser())->parse($str, true, true, true);
+            return (new YamlParser())->parse($str, true);
         } catch (\Exception $e) {
             throw new ParserException('Error while parsing YAML');
         }
