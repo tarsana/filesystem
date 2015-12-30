@@ -7,21 +7,21 @@ class YamlTest extends PHPUnit_Framework_TestCase {
 
     public function testParse()
     {
-        $data = Yaml::parse(
-            'name: foo' . PHP_EOL .
-            'age: 22' . PHP_EOL .
-            'valid: true' . PHP_EOL .
-            'friends:' . PHP_EOL .
-            '  - bar' . PHP_EOL .
-            '  - baz' . PHP_EOL
-        );
-        $object = [
-            'name'    => 'foo',
-            'age'     =>  22,
-            'valid'   =>  true,
-            'friends' => [ 'bar', 'baz' ]
-        ];
-        $this->assertEquals($object, $data);
+        // $data = Yaml::parse(
+        //     'name: foo' . PHP_EOL .
+        //     'age: 22' . PHP_EOL .
+        //     'valid: true' . PHP_EOL .
+        //     'friends:' . PHP_EOL .
+        //     '  - bar' . PHP_EOL .
+        //     '  - baz' . PHP_EOL
+        // );
+        // $object = [
+        //     'name'    => 'foo',
+        //     'age'     =>  22,
+        //     'valid'   =>  true,
+        //     'friends' => [ 'bar', 'baz' ]
+        // ];
+        // $this->assertEquals($object, $data);
 
         $data = Yaml::parse(
             '- one' . PHP_EOL .
