@@ -110,6 +110,8 @@ abstract class AbstractFile {
 
         $this->path = $value;
 
+        $this->fs = new Filesystem($this->getFilesystemPath());
+
         $this->pathChanged($oldPath);
 
         return $this;

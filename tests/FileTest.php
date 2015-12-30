@@ -103,7 +103,7 @@ class FileTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue($this->file->isExecutable());
     }
 
-    public function testGetsAndSetsExtension()
+    public function testGetsExtension()
     {
         $this->assertEquals('txt', $this->file->extension());
 
