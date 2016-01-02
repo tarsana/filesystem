@@ -45,6 +45,11 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
         $fs = new Filesystem(path(__DIR__ . '/demo/none-present-folder'));
     }
 
+    public function testGetsRootPath()
+    {
+        $this->assertEquals(path(__DIR__ . '/demo/'), $this->fs->path());
+    }
+
     public function testGetsTheTypeOfPathOrPattern()
     {
         $this->assertEquals('file', $this->fs->whatIs(path('folder1/some-doc.txt')));

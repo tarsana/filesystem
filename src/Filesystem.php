@@ -32,6 +32,16 @@ class Filesystem {
     }
 
     /**
+     * Gets the root path.
+     * 
+     * @return string
+     */
+    public function path()
+    {
+        return $this->rootPath;
+    }
+
+    /**
      * Tells what is the given pattern matching, returns 'file' or 'dir' if a 
      * single file or directory matches the pattern. Returns 'collection' 
      * if there are multiple matches and 'nothing' if no match found.
