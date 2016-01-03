@@ -185,11 +185,11 @@ Notice that all setters return the same instance to enable call chaining.
 ## Parsing and Dumping
 
 ```php
-$data = JSON::parse('some json string here');
-$json = JSON::dump($data);
+$data = Json::parse('some json string here');
+$json = Json::dump($data);
 
-$data = YAML::parse('some YAML string here');
-$yaml = YAML::dump($data);
+$data = Yaml::parse('some YAML string here');
+$yaml = Yaml::dump($data);
 ```
 
 ## Full API Reference
