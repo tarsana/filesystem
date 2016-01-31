@@ -1,6 +1,7 @@
 # Tarsana I/O Package
 
 [![Build Status](https://travis-ci.org/tarsana/io.svg?branch=master)](https://travis-ci.org/tarsana/io)
+[![Coverage Status](https://coveralls.io/repos/github/tarsana/io/badge.svg?branch=master)](https://coveralls.io/github/tarsana/io?branch=master)
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](http://opensource.org/licenses/MIT)
 
 Simple classes to handle directories and files and parse/dump JSON and YAML.
