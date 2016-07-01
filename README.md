@@ -1,5 +1,7 @@
 # Tarsana I/O Package
 
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4/small.png)](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4)
+
 [![Build Status](https://travis-ci.org/tarsana/io.svg?branch=master)](https://travis-ci.org/tarsana/io)
 [![Coverage Status](https://coveralls.io/repos/github/tarsana/io/badge.svg?branch=master)](https://coveralls.io/github/tarsana/io?branch=master)
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](http://opensource.org/licenses/MIT)
