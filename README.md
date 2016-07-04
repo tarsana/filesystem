@@ -6,7 +6,7 @@
 [![Coverage Status](https://coveralls.io/repos/github/tarsana/io/badge.svg?branch=master)](https://coveralls.io/github/tarsana/io?branch=master)
 [![License](https://poser.pugx.org/laravel/framework/license.svg)](http://opensource.org/licenses/MIT)
 
-Simple classes to handle directories and files and parse/dump JSON and YAML.
+Simple classes to handle Input/Output operations.
 
 ## Installation
 
@@ -184,17 +184,3 @@ $dir->fs(); // get a Filesystem instance having this directory as root
 ```
 
 Notice that all setters return the same instance to enable call chaining.
-
-## Parsing and Dumping
-
-```php
-$data = Json::parse('some json string here');
-$json = Json::dump($data);
-
-$data = Yaml::parse('some YAML string here');
-$yaml = Yaml::dump($data);
-```
-
-## Full API Reference
-
-Please take a look at [API here](http://tarsana.github.io/api/io/).

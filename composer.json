@@ -1,6 +1,6 @@
 {
     "name": "tarsana/io",
-    "description": "Simple IO and filesystem helper classes",
+    "description": "Simple IO helper classes",
     "license": "MIT",
     "authors": [
         {
@@ -8,9 +8,6 @@
             "email": "webneat@gmail.com"
         }
     ],
-    "require": {
-        "symfony/yaml": "^3.1"
-    },
     "autoload": {
         "psr-4": {
             "Tarsana\\IO\\": "src/"
