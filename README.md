@@ -73,7 +73,7 @@ You can use wildcard pattern as argument to this function and the result will be
 
 Now what if you want to get all files and directories corresponding to a pattern ?
 
-```php  
+```php
 $collection = $fs->find('pattern'); // a Collection instance
 
 foreach ($collection->asArray() as $fileOrDir) {
@@ -103,22 +103,22 @@ $collection->names(); // array of names of the files and directories
 
 Well, to handle a file, you should get it first
 
-```php  
-$file = $fs->file('relative/path/to/file'); 
+```php
+$file = $fs->file('relative/path/to/file');
 ```
 
-Notice that this will throw an exception if the file is not found. If you want to create it when missing; specify `true` in the second argument 
+Notice that this will throw an exception if the file is not found. If you want to create it when missing; specify `true` in the second argument
 
-```php  
-$file = $fs->file('relative/path/to/file', true); 
+```php
+$file = $fs->file('relative/path/to/file', true);
 ```
 
 You can also get or create multiple files at once
 
-```php  
+```php
 $files = $fs->files([
-	'relative/path/to/file1', 
-	'relative/path/to/file2', 
+	'relative/path/to/file1',
+	'relative/path/to/file2',
 	'relative/path/to/file3'
 ]); // specify the second argument as true if you want missing files to be created
 
@@ -157,12 +157,12 @@ Notice that all setters return the same instance to enable call chaining.
 
 Just like the file, you can get a directory like that
 
-```php  
+```php
 $dir = $fs->dir('relative/path/to/dir'); // throws exception if the directory not found
 $dir = $fs->dir('relative/path/to/dir', true); // creates the directory if not found
 $dirs = $fs->dirs([
-	'relative/path/to/file1', 
-	'relative/path/to/file2', 
+	'relative/path/to/file1',
+	'relative/path/to/file2',
 	'relative/path/to/file3'
 ]); // a collection containing directories
 ```
@@ -184,3 +184,51 @@ $dir->fs(); // get a Filesystem instance having this directory as root
 ```
 
 Notice that all setters return the same instance to enable call chaining.
+
+## Reading & Writing to Resources
+
+### OutputResource
+
+`Tarsana\IO\Resources\OutputResource` gives the possibility to write content to any resource.
+
+```php
+// Default constructor uses STDOUT by default
+$stdout = new OutputResource;
+// Any writable resource can be used
+$res = fopen('temp.txt', 'w');
+$out = OutputResource($res);
+// Or just give the path
+$out = OutputResource('php://memory');
+
+// Writing content
+$out->write('Hello ')->writeLine('World !');
+// Writes "Hello World !\n" to the resource
+
+// The resource is closed when the $out object is destructed
+// But you can still close it before
+$out->close();
+```
+
+### InputResource
+
+`Tarsana\IO\Resources\InputResource` gives the possibility to read content from any resource. Constructors are the same as `OutputResource` but the default resource is `STDIN`.
+
+```php
+$stdin = new InputResource; // when no parameter is given, it uses STDIN by default
+
+$stdin->readLine(); // reads a line from STDIN
+$stdin->read(); // reads the whole content of STDIN
+$stdin->read(100); // reads 100 bytes from STDIN
+
+// If the STDIN is empty and we do
+$stdin->blocking(false)->read();
+// This will return immediately an empty string; no blocking !
+
+// Piping content to an OutputResource
+$stdin->pipe($out); // the whole remaining content in $stdin will
+// be written to $out
+```
+
+### PipeResource
+
+`Tarsana\IO\Resources\PipeResource` is an Input and Output Resource. It has the ability to read and write at the same time.
