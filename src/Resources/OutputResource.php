@@ -1,12 +1,12 @@
 <?php namespace Tarsana\IO\Resources;
 
 use Tarsana\IO\Exceptions\ResourceException;
-use Tarsana\IO\Interfaces\Writer;
+use Tarsana\IO\Interfaces\WriterInterface;
 
 /**
  * Writes content to a resource.
  */
-class OutputResource extends Resource implements Writer {
+class OutputResource extends Resource implements WriterInterface {
 
     /**
      * Creates a new OutputResource.

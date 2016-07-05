@@ -3,7 +3,7 @@
 /**
  * Reads from a stream of data.
  */
-interface Reader {
+interface ReaderInterface {
     /**
      * Reads content.
      *
@@ -22,9 +22,9 @@ interface Reader {
     /**
      * Pipe all the content to the given writer.
      *
-     * @param  Writer $w
+     * @param  WriterInterface $w
      * @return void
      */
-    public function pipe(Writer $w);
+    public function pipe(WriterInterface $w);
 
 }

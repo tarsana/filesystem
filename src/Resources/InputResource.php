@@ -1,12 +1,13 @@
 <?php namespace Tarsana\IO\Resources;
 
-use Tarsana\IO\Interfaces\Reader;
-use Tarsana\IO\Interfaces\Writer;
+use Tarsana\IO\Exceptions\ResourceException;
+use Tarsana\IO\Interfaces\ReaderInterface;
+use Tarsana\IO\Interfaces\WriterInterface;
 
 /**
  * Reads content from a resource.
  */
-class InputResource extends Resource implements Reader {
+class InputResource extends Resource implements ReaderInterface {
 
     /**
      * Creates a new InputResource.
@@ -51,10 +52,10 @@ class InputResource extends Resource implements Reader {
     /**
      * Pipe all the content to the given writer.
      *
-     * @param  Writer $w
+     * @param  WriterInterface $w
      * @return void
      */
-    public function pipe(Writer $w)
+    public function pipe(WriterInterface $w)
     {
         $w->write($this->read());
     }

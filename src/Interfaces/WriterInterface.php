@@ -3,7 +3,7 @@
 /**
  * Writes data to a stream.
  */
-interface Writer {
+interface WriterInterface {
     /**
      * Writes content.
      *

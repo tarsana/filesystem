@@ -1,13 +1,13 @@
 <?php
 
-use Tarsana\IO\Interfaces\Writer;
+use Tarsana\IO\Interfaces\WriterInterface;
 
 function path($value)
 {
     return str_replace('/', DIRECTORY_SEPARATOR, $value);
 }
 
-class WriterMock implements Writer {
+class WriterMock implements WriterInterface {
     public $content;
     public function write ($content) {
         $this->content = $content;
