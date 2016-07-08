@@ -27,4 +27,11 @@ interface ReaderInterface {
      */
     public function pipe(WriterInterface $w);
 
+    /**
+     * Returns a Stream of the resource content.
+     *
+     * @return Tarsana\Functional\Stream
+     */
+    public function stream();
+
 }

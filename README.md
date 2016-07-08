@@ -227,7 +227,10 @@ $stdin->blocking(false)->read();
 // Piping content to an OutputResource
 $stdin->pipe($out); // the whole remaining content in $stdin will
 // be written to $out
+
 ```
+
+**New: ** `$stdin->stream()` returns a [Lazy Stream](https://github.com/tarsana/functional#streams) to handle data on the resource in a functional lazy way.
 
 ### PipeResource
 

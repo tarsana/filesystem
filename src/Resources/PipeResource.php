@@ -1,5 +1,6 @@
 <?php namespace Tarsana\IO\Resources;
 
+use Tarsana\Functional\Stream;
 use Tarsana\IO\Exceptions\ResourceException;
 use Tarsana\IO\Interfaces\ReaderInterface;
 use Tarsana\IO\Interfaces\WriterInterface;
@@ -106,4 +107,15 @@ class PipeResource extends Resource implements ReaderInterface, WriterInterface 
     {
         $w->write($this->read());
     }
+
+    /**
+     * Returns a Stream of the resource content.
+     *
+     * @return Tarsana\Functional\Stream
+     */
+    public function stream()
+    {
+        return Stream::of($this)->call('read');
+    }
+
 }

@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/utils.php';
 
+use Tarsana\Functional as F;
 use Tarsana\IO\Interfaces\Writer;
 use Tarsana\IO\Resources\InputResource;
 
@@ -56,6 +57,15 @@ class InputResourceTest extends PHPUnit_Framework_TestCase {
         );
     }
 
+    public function testStream()
+    {
+        $s = $this->ir
+            ->stream()
+            ->then(F\split(PHP_EOL));
+
+        $this->assertEquals(["Hello World !", "Second line", "final line"], $s->get());
+    }
+
     public function testClose()
     {
         $resource = fopen('php://memory', 'r');
@@ -69,5 +79,4 @@ class InputResourceTest extends PHPUnit_Framework_TestCase {
     {
         shell_exec('rm -rf ' . path(__DIR__.'/demo/temp*'));
     }
-
 }

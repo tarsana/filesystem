@@ -38,6 +38,9 @@ abstract class Resource {
         return $this;
     }
 
+    /**
+     * Ensures the resource is closed.
+     */
     public function __destruct ()
     {
         $this->close();

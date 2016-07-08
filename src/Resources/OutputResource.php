@@ -49,4 +49,14 @@ class OutputResource extends Resource implements WriterInterface {
         $this->write($content . PHP_EOL);
     }
 
+    /**
+     * Returns a Stream of the resource content.
+     *
+     * @return Tarsana\Functional\Stream
+     */
+    public function stream()
+    {
+        return Stream::of($this);
+    }
+
 }
