@@ -230,7 +230,7 @@ $stdin->pipe($out); // the whole remaining content in $stdin will
 
 ```
 
-**New: ** `$stdin->stream()` returns a [Lazy Stream](https://github.com/tarsana/functional#streams) to handle data on the resource in a functional lazy way.
+**New:** `$stdin->stream()` returns a [Lazy Stream](https://github.com/tarsana/functional#streams) to handle data on the resource in a functional lazy way.
 
 ### PipeResource
 
