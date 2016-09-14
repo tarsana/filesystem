@@ -1,37 +1,24 @@
 <?php namespace Tarsana\IO\Interfaces;
 
 /**
- * Reads from a stream of data.
+ * Reads content from a stream of data.
  */
 interface ReaderInterface {
+
     /**
-     * Reads content.
+     * Reads a number of chars/bytes from the stream.
+     * If `$count == 0`; reads all the available content.
      *
-     * @param  int $length the max length to read, -1 specifies no limit.
+     * @param  int $count
      * @return string
      */
-    public function read ($length = -1);
+    public function read($count = 0);
 
     /**
-     * Reads one line.
+     * Sets the blocking mode.
      *
-     * @return string
+     * @param  bool $isBlocking
+     * @return self
      */
-    public function readLine ();
-
-    /**
-     * Pipe all the content to the given writer.
-     *
-     * @param  WriterInterface $w
-     * @return void
-     */
-    public function pipe(WriterInterface $w);
-
-    /**
-     * Returns a Stream of the resource content.
-     *
-     * @return Tarsana\Functional\Stream
-     */
-    public function stream();
-
+    public function blocking($isBlocking);
 }

@@ -1,6 +1,4 @@
 <?php
-require_once __DIR__ . path('/utils.php');
-
 use Tarsana\IO\Filesystem\Collection;
 use Tarsana\IO\Filesystem\Directory;
 use Tarsana\IO\Filesystem\File;
@@ -9,7 +7,7 @@ use Tarsana\IO\Filesystem;
 /**
  * This uses the directory tests/demo as testing filesystem.
  * The tree of this directory is the following:
- * 
+ *
  * folder1/
  *     folder11/
  *         some-doc.pdf
@@ -26,7 +24,7 @@ use Tarsana\IO\Filesystem;
  *     folder43/
  *         picture.jpg
  * files.txt
- * 
+ *
  */
 class FilesystemTest extends PHPUnit_Framework_TestCase {
 
@@ -34,23 +32,23 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->fs = new Filesystem(path(__DIR__ . '/demo'));
+        $this->fs = new Filesystem(DEMO_DIR);
     }
 
     /**
      * @expectedException Tarsana\IO\Exceptions\FilesystemException
      */
-    public function testThrowsExceptionIfRootDirectoryNotFound()
+    public function test_throws_exception_if_root_directory_not_found()
     {
-        $fs = new Filesystem(path(__DIR__ . '/demo/none-present-folder'));
+        $fs = new Filesystem(path(DEMO_DIR.'/none-present-folder'));
     }
 
-    public function testGetsRootPath()
+    public function test_gets_root_path()
     {
-        $this->assertEquals(path(__DIR__ . '/demo/'), $this->fs->path());
+        $this->assertEquals(path(DEMO_DIR.'/'), $this->fs->path());
     }
 
-    public function testGetsTheTypeOfPathOrPattern()
+    public function test_gets_the_type_of_path_or_pattern()
     {
         $this->assertEquals('file', $this->fs->whatIs(path('folder1/some-doc.txt')));
         $this->assertEquals('file', $this->fs->whatIs(path('folder1/*-doc.txt')));
@@ -61,27 +59,27 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('collection', $this->fs->whatIs(path('folder*/*.mp3')));
     }
 
-    public function testChecksIfFileExists()
+    public function test_checks_if_file_exists()
     {
-        $this->assertTrue($this->fs->isFile(path('folder1/track.mp3'))); 
-        $this->assertFalse($this->fs->isFile(path('folder1/track.txt'))); 
+        $this->assertTrue($this->fs->isFile(path('folder1/track.mp3')));
+        $this->assertFalse($this->fs->isFile(path('folder1/track.txt')));
     }
 
-    public function testChecksIfDirectoryExists()
+    public function test_checks_if_directory_exists()
     {
         $this->assertTrue($this->fs->isDir(path('folder4/folder42')));
-        $this->assertFalse($this->fs->isDir('folder5')); 
+        $this->assertFalse($this->fs->isDir('folder5'));
     }
 
-    public function testChecksIfFileOrDirectoryExists()
+    public function test_checks_if_file_or_directory_exists()
     {
-        $this->assertTrue($this->fs->isAny(path('folder1/track.mp3'))); 
-        $this->assertFalse($this->fs->isAny(path('folder1/track.txt'))); 
+        $this->assertTrue($this->fs->isAny(path('folder1/track.mp3')));
+        $this->assertFalse($this->fs->isAny(path('folder1/track.txt')));
         $this->assertTrue($this->fs->isAny(path('folder4/folder42')));
         $this->assertFalse($this->fs->isAny('folder5'));
     }
 
-    public function testChecksIfMultipleFilesExist()
+    public function test_checks_if_multiple_files_exist()
     {
         $this->assertTrue($this->fs->areFiles([
             path('folder1/track.mp3'),
@@ -98,7 +96,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
         ]));
     }
 
-    public function testChecksIfMultipleDirectoriesExist()
+    public function test_checks_if_multiple_directories_exist()
     {
         $this->assertTrue($this->fs->areDirs([
             'folder1',
@@ -114,7 +112,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
         ]));
     }
 
-    public function testChecksIfMultipleFilesOrDirectoriesExist()
+    public function test_checks_if_multiple_files_or_directories_exist()
     {
         $this->assertTrue($this->fs->areAny([
             'folder1',
@@ -130,7 +128,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
         ]));
     }
 
-    public function testGetsOrCreatesFilesByName()
+    public function test_gets_or_creates_files_by_name()
     {
         $file = $this->fs->file('files.txt');
         $this->assertTrue($file instanceof File);
@@ -151,7 +149,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
         $this->fs->dir('tmp')->remove();
     }
 
-    public function testGetsOrCreatesDirectoriesByName()
+    public function test_gets_or_creates_directories_by_name()
     {
         $dir = $this->fs->dir('folder1');
         $this->assertTrue($dir instanceof Directory);
@@ -174,7 +172,7 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException Tarsana\IO\Exceptions\FilesystemException
      */
-    public function testThrowsExceptionIfFileNotFound()
+    public function test_throws_exception_if_file_not_found()
     {
         $this->fs->file('none-present-file.txt');
     }
@@ -182,12 +180,12 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException Tarsana\IO\Exceptions\FilesystemException
      */
-    public function testThrowsExceptionIfDirectoryNotFound()
+    public function test_throws_exception_if_directory_not_found()
     {
         $this->fs->dir('none-present-folder');
     }
 
-    public function testGetsFilesOrDirectoriesMatchingPattern()
+    public function test_gets_files_or_directories_matching_pattern()
     {
         $found = $this->fs->find('f*');
         $this->assertTrue($found instanceof Collection);
@@ -196,18 +194,18 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(4, $found->dirs()->count());
     }
 
-    public function testRemovesFilesAndDirectories()
+    public function test_removes_files_and_directories()
     {
         $file = $this->fs->file(path('tmp/file.php'), true);
         $this->assertTrue($this->fs->isFile(path('tmp/file.php')));
         $this->fs->remove(path('tmp/file.php'));
         $this->assertFalse($this->fs->isFile(path('tmp/file.php')));
-        
+
         $dir = $this->fs->dir(path('tmp/dir'), true);
         $this->assertTrue($this->fs->isDir(path('tmp/dir')));
         $this->fs->remove(path('tmp/dir'));
         $this->assertFalse($this->fs->isDir(path('tmp/file.php')));
-        
+
         $file = $this->fs->file(path('tmp/file.php'), true);
         $dir = $this->fs->dir(path('tmp/dir'), true);
         $this->fs->removeAll([path('tmp/file.php', 'tmp/dir')]);
@@ -217,6 +215,6 @@ class FilesystemTest extends PHPUnit_Framework_TestCase {
 
     public function tearDown()
     {
-        shell_exec('rm -rf ' . path(__DIR__.'/demo/tmp'));
+        remove(path(DEMO_DIR.'/tmp'));
     }
 }

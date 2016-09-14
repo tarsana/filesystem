@@ -1,21 +1,16 @@
 <?php namespace Tarsana\IO\Interfaces;
 
 /**
- * Writes data to a stream.
+ * Writes content into a stream of data.
  */
 interface WriterInterface {
+
     /**
      * Writes content.
      *
+     * @param  string $content
      * @return self
      */
     public function write($content);
-
-    /**
-     * Writes content and adds EOL.
-     *
-     * @return self
-     */
-    public function writeLine($content);
 
 }
