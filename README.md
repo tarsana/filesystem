@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/tarsana/io.svg?branch=master)](https://travis-ci.org/tarsana/io)
 [![Coverage Status](https://coveralls.io/repos/github/tarsana/io/badge.svg?branch=master)](https://coveralls.io/github/tarsana/io?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tarsana/io/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tarsana/io/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4/mini.png)](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/tarsana/io/blob/master/LICENSE)
 
 Simple classes to handle Input/Output operations.
