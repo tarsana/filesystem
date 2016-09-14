@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/tarsana/io.svg?branch=master)](https://travis-ci.org/tarsana/io)
 [![Coverage Status](https://coveralls.io/repos/github/tarsana/io/badge.svg?branch=master)](https://coveralls.io/github/tarsana/io?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/tarsana/io/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/tarsana/io/?branch=master)
+[![SensioLabsInsight](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4/mini.png)](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/tarsana/io/blob/master/LICENSE)
 
 Simple classes to handle Input/Output operations.
@@ -186,21 +187,21 @@ Notice that all setters return the same instance to enable call chaining.
 
 ## Reading & Writing to Resources
 
-### OutputResource
+### Writer
 
-`Tarsana\IO\Resources\OutputResource` gives the possibility to write content to any resource.
+`Tarsana\IO\Resource\Writer` gives the possibility to write content to any resource.
 
 ```php
 // Default constructor uses STDOUT by default
-$stdout = new OutputResource;
+$stdout = new Writer;
 // Any writable resource can be used
 $res = fopen('temp.txt', 'w');
-$out = OutputResource($res);
+$out = Writer($res);
 // Or just give the path
-$out = OutputResource('php://memory');
+$out = Writer('php://memory');
 
 // Writing content
-$out->write('Hello ')->writeLine('World !');
+$out->write('Hello ')->write('World !');
 // Writes "Hello World !\n" to the resource
 
 // The resource is closed when the $out object is destructed
@@ -208,29 +209,21 @@ $out->write('Hello ')->writeLine('World !');
 $out->close();
 ```
 
-### InputResource
+### Reader
 
-`Tarsana\IO\Resources\InputResource` gives the possibility to read content from any resource. Constructors are the same as `OutputResource` but the default resource is `STDIN`.
+`Tarsana\IO\Resources\Reader` gives the possibility to read content from any resource. Constructors are the same as `Writer` but the default resource is `STDIN`.
 
 ```php
-$stdin = new InputResource; // when no parameter is given, it uses STDIN by default
+$stdin = new Reader; // when no parameter is given, it uses STDIN by default
 
-$stdin->readLine(); // reads a line from STDIN
 $stdin->read(); // reads the whole content of STDIN
 $stdin->read(100); // reads 100 bytes from STDIN
 
 // If the STDIN is empty and we do
 $stdin->blocking(false)->read();
 // This will return immediately an empty string; no blocking !
-
-// Piping content to an OutputResource
-$stdin->pipe($out); // the whole remaining content in $stdin will
-// be written to $out
-
 ```
 
-**New:** `$stdin->stream()` returns a [Lazy Stream](https://github.com/tarsana/functional#streams) to handle data on the resource in a functional lazy way.
+### Buffer
 
-### PipeResource
-
-`Tarsana\IO\Resources\PipeResource` is an Input and Output Resource. It has the ability to read and write at the same time.
+`Tarsana\IO\Resource\Buffer` is a Reader and Writer at the same time. If no resource is given, it uses `php://memory` to store content.

@@ -1,5 +1,4 @@
 <?php
-require_once __DIR__ . '/utils.php';
 
 use Tarsana\IO\Filesystem\Collection;
 use Tarsana\IO\Filesystem\Directory;
@@ -14,7 +13,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase {
 
     public function setUp()
     {
-        $this->tempPath = path(__DIR__.'/demo/temp/');
+        $this->tempPath = path(DEMO_DIR.'/temp/');
         $this->collection = new Collection([
             new File(path($this->tempPath.'file1.txt')),
             new File(path($this->tempPath.'file2.txt')),
@@ -25,72 +24,72 @@ class CollectionTest extends PHPUnit_Framework_TestCase {
         ]);
     }
 
-    public function testAddingAndCountingElements()
+    public function test_adding_and_counting_elements()
     {
         $this->assertEquals(6, $this->collection->count());
 
         $this->collection->add(new File(path($this->tempPath.'file3.txt')));
         $this->assertEquals(7, $this->collection->count());
 
-        // Does not add the same file twice 
+        // Does not add the same file twice
         $this->collection->add(new File(path($this->tempPath.'file1.txt')));
         $this->assertEquals(7, $this->collection->count());
     }
 
-    public function testContains()
+    public function test_contains()
     {
         $this->assertTrue($this->collection->contains(path($this->tempPath.'file1.txt')));
         $this->assertFalse($this->collection->contains(path($this->tempPath.'file.txt')));
     }
 
-    public function testGetsFileOrDirectoryByPath()
+    public function test_gets_file_or_directory_by_path()
     {
         $file = $this->collection->get(path($this->tempPath.'file1.txt'));
         $this->assertTrue($file instanceof File);
         $this->assertEquals('file1.txt', $file->name());
     }
 
-    public function testUpdatesPathsAutomatically()
+    public function test_updates_paths_automatically()
     {
         $file = $this->collection->get(path($this->tempPath.'file1.txt'));
         $this->assertFalse($this->collection->contains(path($this->tempPath.'other.txt')));
         $file->name('other.txt', true);
         $this->assertTrue($this->collection->contains(path($this->tempPath.'other.txt')));
     }
-    
-    public function testGetsAll()
+
+    public function test_gets_all()
     {
         $array = $this->collection->asArray();
 
         $this->assertTrue(is_array($array));
         $this->assertEquals(6, count($array));
     }
-    
-    public function testGetsFiles()
+
+    public function test_gets_files()
     {
         $files = $this->collection->files();
 
         $this->assertTrue($files instanceof Collection);
         $this->assertEquals(3, $files->count());
     }
-    
-    public function testGetsDirectories()
+
+    public function test_gets_directories()
     {
         $dirs = $this->collection->dirs();
 
         $this->assertTrue($dirs instanceof Collection);
         $this->assertEquals(3, $dirs->count());
     }
-    
-    public function testGetsFirstElement()
+
+    public function test_gets_first_element()
     {
         $this->assertEquals(
             path($this->tempPath.'file1.txt'),
             $this->collection->first()->path()
         );
     }
-    
-    public function testGetsLastElement()
+
+    public function test_gets_last_element()
     {
         $this->assertEquals(
             path($this->tempPath.'dir1/file11.txt'),
@@ -98,7 +97,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testGetsArrayOfNames()
+    public function test_gets_array_of_names()
     {
         $this->assertEquals(
             ['file1.txt', 'file2.txt', 'dir1', 'dir2', 'dir11', 'file11.txt'],
@@ -106,7 +105,7 @@ class CollectionTest extends PHPUnit_Framework_TestCase {
         );
     }
 
-    public function testGetsArrayOfPaths()
+    public function test_gets_array_of_paths()
     {
         $this->assertEquals(
             [
@@ -120,11 +119,11 @@ class CollectionTest extends PHPUnit_Framework_TestCase {
             $this->collection->paths()
         );
     }
-    
-    public function testRemovesElementByPath()
+
+    public function test_removes_element_by_path()
     {
         $this->assertTrue($this->collection->contains(path($this->tempPath.'dir1')));
-        
+
         $this->collection->remove(path($this->tempPath.'dir1'));
 
         $this->assertEquals(5, $this->collection->count());
@@ -133,6 +132,6 @@ class CollectionTest extends PHPUnit_Framework_TestCase {
 
     public function tearDown()
     {
-        shell_exec('rm -rf ' . path(__DIR__.'/demo/temp'));
+        remove(path(DEMO_DIR.'/temp'));
     }
 }
