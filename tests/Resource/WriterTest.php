@@ -23,6 +23,11 @@ class WriterTest extends PHPUnit_Framework_TestCase {
         $writer = new Writer(fopen('php://memory', 'r'));
     }
 
+    public function test_constructor()
+    {
+        new Writer;
+    }
+
     public function test_close()
     {
         $resource = fopen('php://memory', 'w');

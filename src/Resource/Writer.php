@@ -37,7 +37,7 @@ class Writer extends ResourceHanlder implements WriterInterface {
      */
     protected function defaultResource()
     {
-        return STDOUT;
+        return 'php://stdout';
     }
 
     /**

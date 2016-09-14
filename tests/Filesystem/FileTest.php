@@ -29,7 +29,7 @@ class FileTest extends PHPUnit_Framework_TestCase {
     /**
      * @expectedException Tarsana\IO\Exceptions\FilesystemException
      */
-    public function test_throws_exception_when_cannot_create_the_file()
+    public function test_throws_exception_when_directory_exists_with_same_path()
     {
         $file = new File(path(DEMO_DIR.'/folder1'));
     }
@@ -60,6 +60,16 @@ class FileTest extends PHPUnit_Framework_TestCase {
         $this->assertTrue(is_file($this->filePath));
     }
 
+    /**
+     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     */
+    public function test_throws_exception_when_already_exists_path()
+    {
+        $path = path(DEMO_DIR.'/temp-2.txt');
+        file_put_contents($path, '');
+        $this->file->path($path);
+    }
+
     public function test_gets_and_sets_name()
     {
         $this->assertEquals('temp.txt', $this->file->name());
@@ -73,6 +83,14 @@ class FileTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('temp.txt', $this->file->name());
         $this->assertEquals($this->filePath, $this->file->path());
         $this->assertTrue(is_file($this->filePath));
+    }
+
+    /**
+     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     */
+    public function test_throws_exception_when_invalid_name()
+    {
+        $this->file->name('');
     }
 
     public function test_gets_and_sets_permissions()
@@ -104,11 +122,11 @@ class FileTest extends PHPUnit_Framework_TestCase {
         chmod($this->filePath, 0777);
     }
 
-    public function test_gets_extension()
+    public function test_sets_and_gets_extension()
     {
         $this->assertEquals('txt', $this->file->extension());
 
-        $this->file->name('temp.jpg');
+        $this->file->extension('jpg');
         $this->assertEquals('jpg', $this->file->extension());
 
         $this->file->name('.gitignore');
@@ -170,7 +188,8 @@ class FileTest extends PHPUnit_Framework_TestCase {
 
     public function tearDown()
     {
-        remove(path(DEMO_DIR.'/temp'));
+        remove(path(DEMO_DIR.'/temp.txt'));
+        remove(path(DEMO_DIR.'/temp-2.txt'));
     }
 
 }
