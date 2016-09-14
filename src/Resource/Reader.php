@@ -39,7 +39,7 @@ class Reader extends ResourceHanlder implements ReaderInterface {
      */
     protected function defaultResource()
     {
-        return STDIN;
+        return 'php://stdin';
     }
 
     /**
