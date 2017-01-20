@@ -1,7 +1,7 @@
 <?php namespace Tarsana\IO\Resource;
 
-use Tarsana\IO\Interfaces\ReaderInterface;
-use Tarsana\IO\Interfaces\WriterInterface;
+use Tarsana\IO\Interfaces\Resource\Reader as ReaderInterface;
+use Tarsana\IO\Interfaces\Resource\Writer as WriterInterface;
 use Tarsana\IO\Exceptions\ResourceHandlerException;
 
 /**

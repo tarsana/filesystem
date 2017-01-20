@@ -1,6 +1,6 @@
 <?php namespace Tarsana\IO\Resource;
 
-use Tarsana\IO\Interfaces\ReaderInterface;
+use Tarsana\IO\Interfaces\Resource\Reader as ReaderInterface;
 
 /**
  * Reads content from a resource.

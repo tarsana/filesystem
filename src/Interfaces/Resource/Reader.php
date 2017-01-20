@@ -1,9 +1,9 @@
-<?php namespace Tarsana\IO\Interfaces;
+<?php namespace Tarsana\IO\Interfaces\Resource;
 
 /**
  * Reads content from a stream of data.
  */
-interface ReaderInterface {
+interface Reader {
 
     /**
      * Reads a number of chars/bytes from the stream.
