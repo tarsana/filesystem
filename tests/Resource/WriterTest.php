@@ -1,5 +1,6 @@
 <?php
 
+use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Resource\Writer;
 
 class WriterTest extends PHPUnit_Framework_TestCase {
@@ -16,7 +17,7 @@ class WriterTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\ResourceHandlerException
+     * @expectedException Tarsana\IO\Exceptions\ResourceException
      */
     public function test_fails_if_not_writable()
     {
@@ -41,6 +42,9 @@ class WriterTest extends PHPUnit_Framework_TestCase {
     {
         $this->writer->write("Hello");
         $this->assertEquals("Hello", file_get_contents($this->path));
+
+        $this->writer->writeLine(" World");
+        $this->assertEquals("Hello World" . PHP_EOL, file_get_contents($this->path));
     }
 
     public function tearDown()

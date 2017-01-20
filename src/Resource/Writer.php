@@ -1,7 +1,7 @@
 <?php namespace Tarsana\IO\Resource;
 
 use Tarsana\IO\Interfaces\Resource\Writer as WriterInterface;
-use Tarsana\IO\Exceptions\ResourceHandlerException;
+use Tarsana\IO\Exceptions\ResourceException;
 
 /**
  * Writes content to a resource.
@@ -16,8 +16,19 @@ class Writer extends ResourceHanlder implements WriterInterface {
     public function write($content)
     {
         if(false === fwrite($this->resource, $content))
-            throw new ResourceHandlerException("Unable to write content to resource");
+            throw new ResourceException("Unable to write content to resource");
         return $this;
+    }
+
+    /**
+     * Writes the given text then an end of line character.
+     *
+     * @param  string $text
+     * @return self
+     */
+    public function writeLine($text)
+    {
+        return $this->write($text . PHP_EOL);
     }
 
     /**

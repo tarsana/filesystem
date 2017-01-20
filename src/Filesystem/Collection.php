@@ -1,23 +1,23 @@
 <?php namespace Tarsana\IO\Filesystem;
 
-use Tarsana\IO\Filesystem\Directory;
-use Tarsana\IO\Filesystem\File;
+use Tarsana\IO\Interfaces\Filesystem\Collection as CollectionInterface;
+use Tarsana\IO\Interfaces\Filesystem\Directory as DirectoryInterface;
+use Tarsana\IO\Interfaces\Filesystem\File as FileInterface;
 
-
-class Collection {
+class Collection implements CollectionInterface {
 
     /**
-     * Array containing the items, it's indexed by the 
-     * path of items and holds other informations 
+     * Array containing the items, it's indexed by the
+     * path of items and holds other informations
      * in addition to the file instances.
-     * 
+     *
      * @var array
      */
     protected $items;
 
     /**
      * Creates a Collection.
-     * 
+     *
      * @param array $files
      */
     public function __construct($files = false)
@@ -31,9 +31,9 @@ class Collection {
     /**
      * Adds new items to the collection. If an
      * item already exists It will be ignored.
-     * 
-     * @param Tarsana\IO\Filesystem\AbstractFile|array $item
-     * @return Tarsana\IO\Filesystem\Collection
+     *
+     * @param Tarsana\IO\Interfaces\Filesystem\AbstractFile|array $item
+     * @return self
      */
     public function add($item)
     {
@@ -51,7 +51,7 @@ class Collection {
     }
 
     /**
-     * This is called when the path of an item is changed, It updates 
+     * This is called when the path of an item is changed, It updates
      * the paths array by replacing the old path with the new one.
      *
      * @param  string $oldPath
@@ -67,9 +67,9 @@ class Collection {
     }
 
     /**
-     * Returns TRUE if one of the collection files 
-     * has the provided path, FALSE otherwise.
-     * 
+     * Returns `true` if one of the collection files
+     * has the provided path, `false` otherwise.
+     *
      * @param  string $path
      * @return boolean
      */
@@ -80,7 +80,7 @@ class Collection {
 
     /**
      * Returns the mumber of elements in the collection.
-     * 
+     *
      * @return int
      */
     public function count()
@@ -90,13 +90,13 @@ class Collection {
 
     /**
      * Returns a new collection containing only files.
-     * 
-     * @return Tarsana\IO\Filesystem\Collection
+     *
+     * @return self
      */
     public function files()
     {
         $filesList = array_filter($this->items, function($item) {
-            return ($item['instance'] instanceof File);
+            return ($item['instance'] instanceof FileInterface);
         });
 
         $filesList = array_map(function($item) {
@@ -108,13 +108,13 @@ class Collection {
 
     /**
      * Returns a new collection containing only directories.
-     * 
-     * @return Tarsana\IO\Filesystem\Collection
+     *
+     * @return self
      */
     public function dirs()
     {
         $filesList = array_filter($this->items, function($item) {
-            return ($item['instance'] instanceof Directory);
+            return ($item['instance'] instanceof DirectoryInterface);
         });
 
         $filesList = array_map(function($item) {
@@ -126,7 +126,7 @@ class Collection {
 
     /**
      * Returns elements as array.
-     * 
+     *
      * @return array
      */
     public function asArray()
@@ -138,8 +138,8 @@ class Collection {
 
     /**
      * Returns the first item or null if the collection is empty.
-     * 
-     * @return Tarsana\IO\Filesystem\AbstractFile|null
+     *
+     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile|null
      */
     public function first()
     {
@@ -152,8 +152,8 @@ class Collection {
 
     /**
      * Returns the last item or null if the collection is empty.
-     * 
-     * @return Tarsana\IO\Filesystem\AbstractFile|null
+     *
+     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile|null
      */
     public function last()
     {
@@ -166,7 +166,7 @@ class Collection {
 
     /**
      * Returns array of paths of the items.
-     * 
+     *
      * @return array
      */
     public function paths()
@@ -176,7 +176,7 @@ class Collection {
 
     /**
      * Returns array of names of the items.
-     * 
+     *
      * @return array
      */
     public function names()
@@ -186,9 +186,9 @@ class Collection {
 
     /**
      * Gets a file or directory by path.
-     * 
+     *
      * @param  string $path
-     * @return Tarsana\IO\Filesystem\AbstractFile
+     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile
      */
     public function get($path)
     {
@@ -200,9 +200,9 @@ class Collection {
 
     /**
      * Removes a file or directory from the collection.
-     * 
+     *
      * @param  string $path
-     * @return Tarsana\IO\Filesystem\Collection
+     * @return self
      */
     public function remove($path)
     {

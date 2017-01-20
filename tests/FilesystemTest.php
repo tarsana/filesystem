@@ -1,8 +1,9 @@
 <?php
+use Tarsana\IO\Filesystem;
+use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Filesystem\Collection;
 use Tarsana\IO\Filesystem\Directory;
 use Tarsana\IO\Filesystem\File;
-use Tarsana\IO\Filesystem;
 
 /**
  * This uses the directory tests/demo as testing filesystem.
@@ -26,7 +27,7 @@ use Tarsana\IO\Filesystem;
  * files.txt
  *
  */
-class FilesystemTest extends PHPUnit_Framework_TestCase {
+class LocalTest extends PHPUnit_Framework_TestCase {
 
     protected $fs;
 

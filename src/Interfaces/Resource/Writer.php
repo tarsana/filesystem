@@ -1,7 +1,7 @@
 <?php namespace Tarsana\IO\Interfaces\Resource;
 
 /**
- * Writes content into a stream of data.
+ * Writes content into a text resource.
  */
 interface Writer {
 
@@ -12,5 +12,13 @@ interface Writer {
      * @return self
      */
     public function write($content);
+
+    /**
+     * Writes the given text then an end of line character.
+     *
+     * @param  string $text
+     * @return self
+     */
+    public function writeLine($text);
 
 }

@@ -202,7 +202,9 @@ $out = Writer('php://memory');
 
 // Writing content
 $out->write('Hello ')->write('World !');
-// Writes "Hello World !\n" to the resource
+// Writes "Hello World !" to the resource
+$out->writeLine('Hi');
+// Writes "Hi".PHP_EOL to the resource
 
 // The resource is closed when the $out object is destructed
 // But you can still close it before
@@ -218,7 +220,8 @@ $stdin = new Reader; // when no parameter is given, it uses STDIN by default
 
 $stdin->read(); // reads the whole content of STDIN
 $stdin->read(100); // reads 100 bytes from STDIN
-
+$stdin->readUntil(' '); // reads until the first ' ' (space) or EOF
+$stdin->readLine(); // reads until PHP_EOL or EOF
 // If the STDIN is empty and we do
 $stdin->blocking(false)->read();
 // This will return immediately an empty string; no blocking !

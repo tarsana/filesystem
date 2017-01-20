@@ -13,6 +13,13 @@ interface Filesystem {
     public function path();
 
     /**
+     * Gets the filesystem adapter.
+     *
+     * @return Tarsana\IO\Interfaces\Filesystem\Adapter
+     */
+    public function adapter();
+
+    /**
      * Tells what is the given pattern matching, returns 'file' or 'dir' if a
      * single file or directory matches the pattern. Returns 'collection'
      * if there are multiple matches and 'nothing' if no match found.
@@ -76,6 +83,60 @@ interface Filesystem {
      * @return boolean
      */
     public function areAny($paths, $areAbsolute = false);
+
+    /**
+     * Checks if the given path is readable.
+     *
+     * @param  string  $path
+     * @param  boolean $isAbsolute
+     * @return boolean
+     */
+    public function isReadable($path, $isAbsolute = false);
+
+    /**
+     * Checks if all the given paths are readable.
+     *
+     * @param  string  $paths
+     * @param  boolean $areAbsolute
+     * @return boolean
+     */
+    public function areReadable($paths, $areAbsolute = false);
+
+    /**
+     * Checks if the given path is writable.
+     *
+     * @param  string  $path
+     * @param  boolean $isAbsolute
+     * @return boolean
+     */
+    public function isWritable($path, $isAbsolute = false);
+
+    /**
+     * Checks if all the given paths are writable.
+     *
+     * @param  string  $paths
+     * @param  boolean $areAbsolute
+     * @return boolean
+     */
+    public function areWritable($paths, $areAbsolute = false);
+
+    /**
+     * Checks if the given path is executable.
+     *
+     * @param  string  $path
+     * @param  boolean $isAbsolute
+     * @return boolean
+     */
+    public function isExecutable($path, $isAbsolute = false);
+
+    /**
+     * Checks if all the given paths are executable.
+     *
+     * @param  string  $paths
+     * @param  boolean $areAbsolute
+     * @return boolean
+     */
+    public function areExecutable($paths, $areAbsolute = false);
 
     /**
      * Gets a file by relative or absolute path,

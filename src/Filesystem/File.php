@@ -1,44 +1,43 @@
 <?php namespace Tarsana\IO\Filesystem;
 
+use Tarsana\IO\Interfaces\Filesystem\File as FileInterface;
 use Tarsana\IO\Exceptions\FilesystemException;
 use Tarsana\IO\Filesystem\AbstractFile;
 
 
-class File extends AbstractFile {
+class File extends AbstractFile implements FileInterface {
 
     /**
      * Tells if the file exists.
-     * 
+     *
      * @return boolean
      */
     public function exists()
     {
-        return is_file($this->path);
+        return $this->adapter->isFile($this->path, true);
     }
 
-    /** 
+    /**
      * Creates the file if it doesn't exist.
      *
-     * @return Tarsana\IO\Filesystem\File
+     * @return self
      */
     public function create()
     {
-        if (! file_exists($this->path)) {
+        if (! $this->adapter->fileExists($this->path, true)) {
             // ensure the parent directory exists
-            new Directory(dirname($this->path));
+            new Directory(dirname($this->path), $this->adapter);
 
-            $file = fopen($this->path, "w");
-            if ($file === false) {
+            if ($this->adapter->createFile($this->path) === false) {
                 $this->throwUnableToCreate();
             }
-            fclose($file);
         }
 
         return $this;
     }
 
     /**
-     * Throws a FilesystemException meaning that 
+     * Throws a FilesystemException meaning that
      * it were not possible to create the file.
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException
@@ -50,7 +49,7 @@ class File extends AbstractFile {
 
     /**
      * Gets the path of the parent directory of the file.
-     * 
+     *
      * @return string
      */
     protected function getFilesystemPath()
@@ -60,56 +59,56 @@ class File extends AbstractFile {
 
     /**
      * Copies the file to the provided destination and returns the copy.
-     * 
+     *
      * @param  string $dest
-     * @return Tarsana\IO\Filesystem\File
+     * @return self
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException if unable to create the destination file.
      */
     public function copyAs($dest)
     {
-        $copy = new File($dest);
+        $copy = new File($dest, $this->adapter);
         $copy->content($this->content());
         return $copy;
     }
 
     /**
      * Gets a hash of the file/directory content.
-     * 
+     *
      * @return string
      */
     public function hash()
     {
-        return md5_file($this->path);
+        return $this->adapter->md5File($this->path);
     }
 
     /**
      * Gets or sets the content of the file.
-     * 
+     *
      * @param  string $content
-     * @return string|Tarsana\IO\Filesystem\File
+     * @return string|self
      */
     public function content($content = false)
     {
         if ($content === false) {
-            return file_get_contents($this->path);
+            return $this->adapter->fileGetContents($this->path);
         }
 
-        file_put_contents($this->path, $content);
+        $this->adapter->filePutContents($this->path, $content);
         return $this;
     }
 
     /**
      * Appends a content to the file.
-     * 
+     *
      * @param  string $content
-     * @return Tarsana\IO\Filesystem\File
+     * @return self
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException if unable to append the content.
      */
     public function append($content)
     {
-        if (file_put_contents($this->path, $content, FILE_APPEND) === false) {
+        if ($this->adapter->filePutContents($this->path, $content, FILE_APPEND) === false) {
             throw new FilesystemException("Cannot append content to the file '{$this->path}'");
         }
         return $this;
@@ -117,14 +116,14 @@ class File extends AbstractFile {
 
     /**
      * Gets or sets the file extension.
-     * 
+     *
      * @param  string $extension
-     * @return string|Tarsana\IO\Filesystem\File
+     * @return string|self
      */
     public function extension($extension = false)
     {
         if($extension === false) {
-            return pathinfo($this->path, PATHINFO_EXTENSION);
+            return $this->adapter->extension($this->path);
         }
 
         $newName = $this->name();
@@ -141,21 +140,21 @@ class File extends AbstractFile {
 
     /**
      * Returns TRUE if the file is writable, FALSE otherwise.
-     * 
+     *
      * @return boolean
      */
     public function isWritable()
     {
-        return is_writable($this->path);
+        return $this->adapter->isWritable($this->path);
     }
 
     /**
      * Returns TRUE if the file is executable, FALSE otherwise.
-     * 
+     *
      * @return boolean
      */
     public function isExecutable()
     {
-        return is_executable($this->path);
+        return $this->adapter->isExecutable($this->path);
     }
 }

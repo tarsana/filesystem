@@ -1,10 +1,12 @@
 <?php namespace Tarsana\IO;
 
-use Tarsana\IO\Interfaces\Filesystem as FilesystemInterface;
-use Tarsana\IO\Exceptions\FilesystemException;
-use Tarsana\IO\Filesystem\Collection;
-use Tarsana\IO\Filesystem\Directory;
 use Tarsana\IO\Filesystem\File;
+use Tarsana\IO\Filesystem\Directory;
+use Tarsana\IO\Filesystem\Collection;
+use Tarsana\IO\Filesystem\Adapters\Local;
+use Tarsana\IO\Interfaces\Filesystem\Adapter;
+use Tarsana\IO\Exceptions\FilesystemException;
+use Tarsana\IO\Interfaces\Filesystem as FilesystemInterface;
 
 /**
  * Finds and handles files and directories within a root directory.
@@ -12,26 +14,37 @@ use Tarsana\IO\Filesystem\File;
 class Filesystem implements FilesystemInterface {
 
     /**
-     * The root path of the filesystem.
+     * The absolute root path of the filesystem.
      *
-     * @var array
+     * @var string
      */
     protected $rootPath;
 
     /**
-     * Creates a new Filesystem instance.
+     * The adapter filesystem.
+     *
+     * @var Tarsana\IO\Interfaces\Filesystem\Adapter
+     */
+    protected $adapter;
+
+    /**
+     * Creates a new Filesystem instance from a path and an optional adapter.
      *
      * @param string $rootPath
+     * @param Tarsana\IO\Interfaces\Filesystem\Adapter $adapter
      * @throws FilesystemException If root path is not a directory.
      **/
-    public function __construct($rootPath)
+    public function __construct($rootPath, Adapter $adapter = null)
     {
+        if (null === $adapter) {
+            $adapter = Local::instance();
+        }
+        $this->adapter = $adapter;
+
         if (! $this->isDir($rootPath, true)) {
             throw new FilesystemException("Cannot find the directory '{$rootPath}'");
         }
-        // Ensure that the path termiates with '/'
-        $rootPath = rtrim($rootPath, '/') . '/';
-        $this->rootPath = $rootPath;
+        $this->rootPath = $adapter->realpath($rootPath) . '/';
     }
 
     /**
@@ -42,6 +55,16 @@ class Filesystem implements FilesystemInterface {
     public function path()
     {
         return $this->rootPath;
+    }
+
+    /**
+     * Gets the filesystem adapter.
+     *
+     * @return Tarsana\IO\Interfaces\Filesystem\Adapter
+     */
+    public function adapter()
+    {
+        return $this->adapter;
     }
 
     /**
@@ -59,12 +82,12 @@ class Filesystem implements FilesystemInterface {
             $pattern = $this->rootPath . $pattern;
         }
 
-        $paths = glob($pattern);
+        $paths = $this->adapter->glob($pattern);
 
         if (count($paths) == 0)
             return 'nothing';
         if (count($paths) == 1)
-            return (is_file($paths[0])) ? 'file' : 'dir';
+            return ($this->adapter->isFile($paths[0])) ? 'file' : 'dir';
         return 'collection';
     }
 
@@ -82,15 +105,19 @@ class Filesystem implements FilesystemInterface {
             $path = $this->rootPath . $path;
         }
         switch ($type) {
+            case 'readable':
+                return $this->adapter->isReadable($path);
+            case 'writable':
+                return $this->adapter->isWritable($path);
+            case 'executable':
+                return $this->adapter->isExecutable($path);
             case 'file':
-                return is_file($path);
-            break;
+                return $this->adapter->isFile($path);
             case 'dir':
-                return is_dir($path);
-            break;
+                // echo PHP_EOL, "Path from FS: {$path}", PHP_EOL;
+                return $this->adapter->isDir($path);
             case 'any':
-                return file_exists($path);
-            break;
+                return $this->adapter->fileExists($path);
             default:
                 throw new FilesystemException("Unknown file type '{$type}'");
         }
@@ -187,6 +214,79 @@ class Filesystem implements FilesystemInterface {
     }
 
     /**
+     * Checks if the given path is readable.
+     *
+     * @param  string  $path
+     * @param  boolean $isAbsolute
+     * @return boolean
+     */
+    public function isReadable($path, $isAbsolute = false)
+    {
+        return $this->is($path, $isAbsolute, 'readable');
+    }
+
+    /**
+     * Checks if all the given paths are readable.
+     *
+     * @param  string  $paths
+     * @param  boolean $areAbsolute
+     * @return boolean
+     */
+    public function areReadable($paths, $areAbsolute = false)
+    {
+        return $this->are($paths, $areAbsolute, 'readable');
+    }
+
+    /**
+     * Checks if the given path is writable.
+     *
+     * @param  string  $path
+     * @param  boolean $isAbsolute
+     * @return boolean
+     */
+    public function isWritable($path, $isAbsolute = false)
+    {
+        return $this->is($path, $isAbsolute, 'writable');
+    }
+
+    /**
+     * Checks if all the given paths are writable.
+        return $this->are($paths, $areAbsolute, 'readable');
+     *
+     * @param  string  $paths
+     * @param  boolean $areAbsolute
+     * @return boolean
+     */
+    public function areWritable($paths, $areAbsolute = false)
+    {
+        return $this->are($paths, $areAbsolute, 'writable');
+    }
+
+    /**
+     * Checks if the given path is executable.
+     *
+     * @param  string  $path
+     * @param  boolean $isAbsolute
+     * @return boolean
+     */
+    public function isExecutable($path, $isAbsolute = false)
+    {
+        return $this->is($path, $isAbsolute, 'executable');
+    }
+
+    /**
+     * Checks if all the given paths are executable.
+     *
+     * @param  string  $paths
+     * @param  boolean $areAbsolute
+     * @return boolean
+     */
+    public function areExecutable($paths, $areAbsolute = false)
+    {
+        return $this->are($paths, $areAbsolute, 'executable');
+    }
+
+    /**
      * Gets a file by relative or absolute path,
      * optionally creates the file if missing.
      *
@@ -205,7 +305,8 @@ class Filesystem implements FilesystemInterface {
         if (! $createMissing && ! $this->isFile($path, true)) {
             throw new FilesystemException("Cannot find the file '{$path}'");
         }
-        return new File($path);
+
+        return new File($path, $this->adapter);
     }
 
     /**
@@ -250,7 +351,7 @@ class Filesystem implements FilesystemInterface {
         if (! $createMissing && ! $this->isDir($path, true)) {
             throw new FilesystemException("Cannot find the directory '{$path}'");
         }
-        return new Directory($path);
+        return new Directory($path, $this->adapter);
     }
 
     /**
@@ -290,11 +391,11 @@ class Filesystem implements FilesystemInterface {
             $pattern = $this->rootPath . $pattern;
         }
         $list = new Collection;
-        foreach (glob($pattern) as $path) {
+        foreach ($this->adapter->glob($pattern) as $path) {
             if ($this->isFile($path, true)) {
-                $list->add(new File($path));
+                $list->add(new File($path, $this->adapter));
             } else {
-                $list->add(new Directory($path));
+                $list->add(new Directory($path, $this->adapter));
             }
         }
         return $list;
@@ -313,15 +414,15 @@ class Filesystem implements FilesystemInterface {
             $path = $this->rootPath . $path;
         }
         if ($this->isFile($path, true)) {
-            unlink($path);
+            $this->adapter->unlink($path);
         } else {
             // clean the directory
             $path = rtrim($path, '/') . '/';
-            foreach (glob($path . '*') as $itemPath) {
+            foreach ($this->adapter->glob($path . '*') as $itemPath) {
                 $this->remove($itemPath, true);
             }
             // remove it
-            rmdir($path);
+            $this->adapter->rmdir($path);
         }
         return $this;
     }

@@ -64,7 +64,7 @@ interface AbstractFile {
     /**
      * Gets the filesystem coresponding to the file.
      *
-     * @return Tarsana\IO\Interface\Filesystem
+     * @return Tarsana\IO\Interfaces\Filesystem
      */
     public function fs();
 
@@ -74,5 +74,29 @@ interface AbstractFile {
      * @return void
      */
     public function remove();
+
+    /**
+     * Tells if the file exists.
+     *
+     * @return boolean
+     */
+    public function exists();
+
+    /**
+     * Creates the file if it doesn't exist.
+     *
+     * @return Tarsana\IO\Filesystem\AbstractFile
+     */
+    public function create();
+
+    /**
+     * Copies the file to the provided destination and returns the copy.
+     *
+     * @param  string $dest
+     * @return Tarsana\IO\Filesystem\AbstractFile
+     *
+     * @throws Tarsana\IO\Exceptions\FilesystemException if unable to create the destination file.
+     */
+    public function copyAs($dest);
 
 }

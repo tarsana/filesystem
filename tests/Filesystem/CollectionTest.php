@@ -1,5 +1,6 @@
 <?php
 
+use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Filesystem\Collection;
 use Tarsana\IO\Filesystem\Directory;
 use Tarsana\IO\Filesystem\File;
