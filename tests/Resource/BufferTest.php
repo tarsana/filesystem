@@ -1,5 +1,6 @@
 <?php
 
+use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Resource\Buffer;
 
 class BufferTest extends PHPUnit_Framework_TestCase {
@@ -51,6 +52,33 @@ class BufferTest extends PHPUnit_Framework_TestCase {
         $this->buffer->write(' Yo');
         $this->assertEquals("World ", $this->buffer->read(6));
         $this->assertEquals("! Yo", $this->buffer->read());
+
+        $this->buffer->writeLine('First line');
+        $this->buffer->writeLine('Second line');
+        $this->assertEquals(
+            "First line" . PHP_EOL . "Second line" . PHP_EOL,
+            $this->buffer->read()
+        );
+
+        $this->buffer->writeLine('First line');
+        $this->buffer->writeLine('Second line');
+        $this->assertEquals(
+            "First line",
+            $this->buffer->readLine()
+        );
+
+        $this->assertEquals(
+            "Second ",
+            $this->buffer->readUntil('line')
+        );
+    }
+
+    /**
+     * @expectedException Tarsana\IO\Exceptions\ResourceException
+     */
+    public function test_throws_exception_if_empty_ending_word_given()
+    {
+        $this->buffer->readUntil('');
     }
 
     public function tearDown()

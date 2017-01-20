@@ -5,7 +5,7 @@ require __DIR__ . '/../vendor/autoload.php';
 define('DEMO_DIR', __DIR__.'/demo');
 
 function path($value) {
-    return str_replace('/', DIRECTORY_SEPARATOR, $value);
+    return $value;
 }
 
 function remove($path) {

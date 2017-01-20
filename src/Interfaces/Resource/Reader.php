@@ -1,7 +1,7 @@
 <?php namespace Tarsana\IO\Interfaces\Resource;
 
 /**
- * Reads content from a stream of data.
+ * Reads content from a text resource.
  */
 interface Reader {
 
@@ -21,4 +21,22 @@ interface Reader {
      * @return self
      */
     public function blocking($isBlocking);
+
+    /**
+     * Reads until end of line or the end of contents.
+     * Returns the read string without the end of line.
+     *
+     * @return string
+     */
+    public function readLine();
+
+    /**
+     * Reads until the given string or the end of contents.
+     * Returns the read string without the ending string.
+     *
+     * @param  string $end
+     * @return string
+     */
+    public function readUntil($end);
+
 }

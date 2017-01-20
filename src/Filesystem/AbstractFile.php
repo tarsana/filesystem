@@ -1,64 +1,80 @@
 <?php namespace Tarsana\IO\Filesystem;
 
-use Tarsana\IO\Exceptions\FilesystemException;
+
 use Tarsana\IO\Filesystem;
+use Tarsana\IO\Filesystem\Adapters\Local;
+use Tarsana\IO\Interfaces\Filesystem\Adapter;
+use Tarsana\IO\Exceptions\FilesystemException;
+use Tarsana\IO\Interfaces\Filesystem\AbstractFile as AbstractFileInterface;
 
 
-abstract class AbstractFile {
+abstract class AbstractFile implements AbstractFileInterface {
 
     /**
      * Absolute path to the file.
-     * 
+     *
      * @var string
      */
     protected $path;
 
     /**
-     * The filesystem instance having the same path 
-     * if this is directory and poiting to the 
+     * The filesystem instance having the same path
+     * if this is directory and poiting to the
      * parent directory if this is a file.
+     *
+     * @var Tarsana\IO\Interfaces\Filesystem
      */
     protected $fs;
 
     /**
+     * The filesystem adapter. It defines the low-level functions
+     * like (fopen, mkdir, ...) for the targeted filesystem.
+     *
+     * @var Tarsana\IO\Interfaces\Filesystem\Adapter
+     */
+    protected $adapter;
+
+    /**
      * Functions to call when the file path changes.
-     * 
+     *
      * @var array
      */
     protected $pathListeners;
 
     /**
      * Creates a File/Directory instance.
-     * 
+     *
      * @param string $path
      */
-    public function __construct($path)
+    public function __construct($path, Adapter $adapter = null)
     {
-        $this->path = str_replace('/', DIRECTORY_SEPARATOR, $path);
+        $this->adapter = (null !== $adapter) ? $adapter : Local::instance();
+        $this->path = $path;
+        $this->pathListeners = [];
+        $this->fs = null; // will create it when needed
+
         if (! $this->canCreate()) {
             $this->throwUnableToCreate();
         }
         $this->create();
-        $this->fs = new Filesystem($this->getFilesystemPath());
-
-        $this->pathListeners = [];
+        $this->path = $this->adapter->realpath($this->path);
     }
 
     /**
-     * Tells if the file exists or can be created. In case of a directory 
-     * for example, this will return false if a file exists with the 
+     * Tells if the file exists or can be created. In case of a directory
+     * for example, this will return false if a file exists with the
      * same path which makes it impossible o create a directory
-     * 
+     *
      * @return boolean
      */
     public function canCreate()
     {
-        return ($this->exists() || ! file_exists($this->path));
+        return $this->exists() || ! $this->adapter->fileExists($this->path);
     }
 
     /**
      * Gets or sets the name of the file.
-     * 
+     *
      * @param  string $value
      * @param  boolean $overwrite
      * @return string|Tarsana\IO\Filesystem\AbstractFile
@@ -68,9 +84,9 @@ abstract class AbstractFile {
     public function name($value = false, $overwrite = false)
     {
         if ($value === false) {
-            return basename($this->path);
+            return $this->adapter->basename($this->path);
         }
-        
+
         if (! is_string($value) || strlen($value) == 0) {
             throw new FilesystemException('Invalid name given to name() method');
         }
@@ -83,12 +99,12 @@ abstract class AbstractFile {
 
     /**
      * Gets or Sets the path.
-     * 
+     *
      * @param  string $value
      * @param  boolean $overwrite
      * @return string|Tarsana\IO\Filesystem\AbstractFile
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if could not rename the file.     
+     * @throws Tarsana\IO\Exceptions\FilesystemException if could not rename the file.
      */
     public function path($value = false, $overwrite = false)
     {
@@ -98,20 +114,18 @@ abstract class AbstractFile {
 
         $oldPath = $this->path;
 
-        if (!$overwrite && file_exists($value)) {
+        if (!$overwrite && $this->adapter->fileExists($value)) {
             throw new FilesystemException("Cannot rename the file '{$this->path}' to '{$value}' because a file already exists");
         }
 
-        (new static($value))->remove();
+        (new static($value, $this->adapter))->remove();
 
-        if (! rename($this->path, $value)) {
+        if (! $this->adapter->rename($this->path, $value)) {
             throw new FilesystemException("Cannot rename the file '{$this->path}' to '{$value}'");
         }
 
         $this->path = $value;
-
-        $this->fs = new Filesystem($this->getFilesystemPath());
-
+        $this->fs = null;
         $this->pathChanged($oldPath);
 
         return $this;
@@ -120,7 +134,7 @@ abstract class AbstractFile {
     /**
      * Notifies the path listeners and passes the old and
      * the new path as parameters to each callback.
-     * 
+     *
      * @return void
      */
     protected function pathChanged($oldPath)
@@ -131,10 +145,10 @@ abstract class AbstractFile {
     }
 
     /**
-     * Adds new path listener. It should accept two 
+     * Adds new path listener. It should accept two
      * parameters: the old path and the new one.
      * It returns the index of the listener.
-     * 
+     *
      * @param Closure $cb
      * @return int
      */
@@ -147,7 +161,7 @@ abstract class AbstractFile {
 
     /**
      * Removes a path listener by index.
-     * 
+     *
      * @param  int $index
      * @return void
      */
@@ -160,19 +174,19 @@ abstract class AbstractFile {
 
     /**
      * Gets or Sets the file permissions.
-     * 
+     *
      * @param  int $value
      * @return string|Tarsana\IO\Filesystem\AbstractFile
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if could not apply permissions to file.     
+     * @throws Tarsana\IO\Exceptions\FilesystemException if could not apply permissions to file.
      */
     public function perms($value = false)
     {
         if ($value === false) {
-            return substr(sprintf('%o', fileperms($this->path)), -4);
+            return substr(sprintf('%o', $this->adapter->fileperms($this->path)), -4);
         }
 
-        if (! chmod($this->path, $value)) {
+        if (! $this->adapter->chmod($this->path, $value)) {
             throw new FilesystemException("Unable to apply permissions to '{$this->path}'");
         }
 
@@ -183,23 +197,24 @@ abstract class AbstractFile {
 
     /**
      * Gets the filesystem coresponding to the file.
-     * 
+     *
      * @return Tarsana\IO\Filesystem
      */
     public function fs()
     {
+        if (null === $this->fs)
+            $this->fs = new Filesystem($this->getFilesystemPath(), $this->adapter);
         return $this->fs;
     }
 
-
     /**
      * Removes the file.
-     * 
+     *
      * @return void
      */
     public function remove()
     {
-        $this->fs->remove($this->path, true);
+        $this->fs()->remove($this->path, true);
     }
 
     /**
@@ -209,17 +224,17 @@ abstract class AbstractFile {
      */
     protected function clearStat()
     {
-        clearstatcache(true, $this->path);
+        $this->adapter->clearstatcache(true, $this->path);
     }
 
     /**
      * Tells if the file exists.
-     * 
+     *
      * @return boolean
      */
     public abstract function exists();
 
-    /** 
+    /**
      * Creates the file if it doesn't exist.
      *
      * @return Tarsana\IO\Filesystem\AbstractFile
@@ -227,7 +242,7 @@ abstract class AbstractFile {
     public abstract function create();
 
     /**
-     * Throws a FilesystemException meaning that 
+     * Throws a FilesystemException meaning that
      * it were not possible to create the file.
      *
      * @return Tarsana\IO\Filesystem\AbstractFile
@@ -238,15 +253,15 @@ abstract class AbstractFile {
 
     /**
      * Gets the path of the directory or the parent directory if this is a file.
-     * 
+     *
      * @return string
      */
     protected abstract function getFilesystemPath();
 
     /**
      * Copies the file to the provided destination and returns the copy.
-     * 
-     * @param  string $dest 
+     *
+     * @param  string $dest
      * @return Tarsana\IO\Filesystem\AbstractFile
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException if unable to create the destination file.

@@ -1,13 +1,12 @@
 <?php namespace Tarsana\IO\Resource;
 
-use Tarsana\IO\Interfaces\Resource\Reader as ReaderInterface;
-use Tarsana\IO\Interfaces\Resource\Writer as WriterInterface;
-use Tarsana\IO\Exceptions\ResourceHandlerException;
+use Tarsana\IO\Interfaces\Resource\Buffer as BufferInterface;
+use Tarsana\IO\Exceptions\ResourceException;
 
 /**
  * Reads and writes content from/to a resource.
  */
-class Buffer extends ResourceHanlder implements ReaderInterface, WriterInterface {
+class Buffer extends ResourceHanlder implements BufferInterface {
 
     /**
      * The current writting position in the file.
@@ -58,6 +57,51 @@ class Buffer extends ResourceHanlder implements ReaderInterface, WriterInterface
     }
 
     /**
+     * Reads until end of line or the end of contents.
+     * Returns the read string without the end of line.
+     *
+     * @return string
+     */
+    public function readLine()
+    {
+        return $this->readUntil(PHP_EOL);
+    }
+
+    /**
+     * Reads until the given string or the end of contents.
+     * Returns the read string without the ending string.
+     *
+     * @param  string $end
+     * @return string
+     * @throws ResourceException if the given $end is empty
+     */
+    public function readUntil($end)
+    {
+        if (empty($end)) {
+            throw new ResourceException("Empty string given to Reader::readUntil()");
+        }
+        fseek($this->resource, $this->readPosition);
+        // Reading the first character (maybe blocking)
+        $buffer = stream_get_contents($this->resource, 1);
+        // saving the blocking mode
+        $mode = $this->blocking();
+        $size = strlen($end);
+        $this->blocking(false);
+        while (strlen($buffer) < $size || substr($buffer, -$size) != $end) {
+            $c = stream_get_contents($this->resource, 1);
+            if (empty($c)) {
+                break;
+            }
+            $buffer .= $c;
+        }
+        $this->blocking($mode);
+        $this->readPosition = ftell($this->resource);
+        return (substr($buffer, -$size) == $end)
+            ? substr($buffer, 0, strlen($buffer) - $size)
+            : $buffer;
+    }
+
+    /**
      * Writes content.
      *
      * @return self
@@ -66,9 +110,20 @@ class Buffer extends ResourceHanlder implements ReaderInterface, WriterInterface
     {
         fseek($this->resource, $this->writePosition);
         if(false === fwrite($this->resource, $content))
-            throw new ResourceHandlerException("Unable to write content to resource");
+            throw new ResourceException("Unable to write content to resource");
         $this->writePosition = ftell($this->resource);
         return $this;
+    }
+
+    /**
+     * Writes the given text then an end of line character.
+     *
+     * @param  string $text
+     * @return self
+     */
+    public function writeLine($text)
+    {
+        return $this->write($text . PHP_EOL);
     }
 
     /**
