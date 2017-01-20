@@ -1,23 +1,26 @@
 <?php namespace Tarsana\IO;
 
+use Tarsana\IO\Interfaces\Filesystem as FilesystemInterface;
 use Tarsana\IO\Exceptions\FilesystemException;
 use Tarsana\IO\Filesystem\Collection;
 use Tarsana\IO\Filesystem\Directory;
 use Tarsana\IO\Filesystem\File;
 
-
-class Filesystem {
+/**
+ * Finds and handles files and directories within a root directory.
+ */
+class Filesystem implements FilesystemInterface {
 
     /**
      * The root path of the filesystem.
-     * 
+     *
      * @var array
      */
     protected $rootPath;
 
     /**
      * Creates a new Filesystem instance.
-     * 
+     *
      * @param string $rootPath
      * @throws FilesystemException If root path is not a directory.
      **/
@@ -33,7 +36,7 @@ class Filesystem {
 
     /**
      * Gets the root path.
-     * 
+     *
      * @return string
      */
     public function path()
@@ -42,10 +45,10 @@ class Filesystem {
     }
 
     /**
-     * Tells what is the given pattern matching, returns 'file' or 'dir' if a 
-     * single file or directory matches the pattern. Returns 'collection' 
+     * Tells what is the given pattern matching, returns 'file' or 'dir' if a
+     * single file or directory matches the pattern. Returns 'collection'
      * if there are multiple matches and 'nothing' if no match found.
-     * 
+     *
      * @param  string  $pattern
      * @param  boolean $isAbsolute
      * @return string
@@ -67,7 +70,7 @@ class Filesystem {
 
     /**
      * Checks if the given path is of the given type.
-     * 
+     *
      * @param  string  $path
      * @param  boolean $isAbsolute
      * @param  string  $type
@@ -95,7 +98,7 @@ class Filesystem {
 
     /**
      * Checks if the given paths are all of the given type.
-     * 
+     *
      * @param  array   $paths
      * @param  boolean $areAbsolute
      * @param  string  $type
@@ -113,7 +116,7 @@ class Filesystem {
 
     /**
      * Checks if the given path is a file.
-     * 
+     *
      * @param  string  $path
      * @param  boolean $isAbsolute
      * @return boolean
@@ -125,7 +128,7 @@ class Filesystem {
 
     /**
      * Checks if all the given path are files.
-     * 
+     *
      * @param  array   $paths
      * @param  boolean $areAbsolute
      * @return boolean
@@ -137,7 +140,7 @@ class Filesystem {
 
     /**
      * Checks if the given path is a directory.
-     * 
+     *
      * @param  string  $path
      * @param  boolean $isAbsolute
      * @return boolean
@@ -149,7 +152,7 @@ class Filesystem {
 
     /**
      * Checks if all the given paths are directories.
-     * 
+     *
      * @param  array   $paths
      * @param  boolean $areAbsolute
      * @return boolean
@@ -161,7 +164,7 @@ class Filesystem {
 
     /**
      * Checks if the given path is a file or directory.
-     * 
+     *
      * @param  string  $path
      * @param  boolean $isAbsolute
      * @return boolean
@@ -173,7 +176,7 @@ class Filesystem {
 
     /**
      * Checks if all the given paths are files or directories.
-     * 
+     *
      * @param  array   $paths
      * @param  boolean $areAbsolute
      * @return boolean
@@ -184,9 +187,9 @@ class Filesystem {
     }
 
     /**
-     * Gets a file by relative or absolute path, 
+     * Gets a file by relative or absolute path,
      * optionally creates the file if missing.
-     * 
+     *
      * @param  string  $path
      * @param  boolean $createMissing
      * @param  boolean $isAbsolute
@@ -206,12 +209,12 @@ class Filesystem {
     }
 
     /**
-     * Gets files by relative or absolute path, 
+     * Gets files by relative or absolute path,
      * optionally creates missing files.
-     * 
+     *
      * @param  array   $paths
      * @param  boolean $createMissing
-     * @return Tarsana\IO\Filesystem\File
+     * @return Tarsana\IO\Filesystem\Collection
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException
      */
@@ -229,13 +232,13 @@ class Filesystem {
     }
 
     /**
-     * Gets a directory by relative or absolute path, 
+     * Gets a directory by relative or absolute path,
      * optionally creates the directory if missing.
-     * 
+     *
      * @param  string  $path
      * @param  boolean $createMissing
      * @param  boolean $isAbsolute
-     * @return Tarsana\IO\Filesystem\File
+     * @return Tarsana\IO\Filesystem\Directory
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException
      */
@@ -251,12 +254,12 @@ class Filesystem {
     }
 
     /**
-     * Gets directories by relative or absolute path, 
+     * Gets directories by relative or absolute path,
      * optionally creates missing directories.
-     * 
+     *
      * @param  array   $paths
      * @param  boolean $createMissing
-     * @return Tarsana\IO\Filesystem\File
+     * @return Tarsana\IO\Filesystem\Collection
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException
      */
@@ -274,12 +277,12 @@ class Filesystem {
     }
 
     /**
-     * Finds files and directories matching the given pattern 
+     * Finds files and directories matching the given pattern
      * and returns a collection containing them.
-     * 
+     *
      * @param  string  $pattern
      * @param  boolean $isAbsolute
-     * @return Collection
+     * @return Tarsana\IO\Filesystem\Collection
      */
     public function find($pattern, $isAbsolute = false)
     {
@@ -299,6 +302,7 @@ class Filesystem {
 
     /**
      * Removes a file or directory recursively.
+     *
      * @param  string  $path
      * @param  boolean $isAbsolute
      * @return Tarsana\IO\Filesystem
@@ -309,7 +313,7 @@ class Filesystem {
             $path = $this->rootPath . $path;
         }
         if ($this->isFile($path, true)) {
-            unlink($path);        
+            unlink($path);
         } else {
             // clean the directory
             $path = rtrim($path, '/') . '/';
@@ -324,7 +328,7 @@ class Filesystem {
 
     /**
      * Removes an array of files or directories.
-     * 
+     *
      * @param  array   $paths
      * @param  boolean $areAbsolute
      * @return Tarsana\IO\Filesystem

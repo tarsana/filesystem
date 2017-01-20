@@ -1,9 +1,9 @@
-<?php namespace Tarsana\IO\Interfaces;
+<?php namespace Tarsana\IO\Interfaces\Resource;
 
 /**
  * Writes content into a stream of data.
  */
-interface WriterInterface {
+interface Writer {
 
     /**
      * Writes content.
