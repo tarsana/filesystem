@@ -13,8 +13,9 @@
             "Tarsana\\IO\\": "src/"
         }
     },
+    "minimum-stability": "dev",
     "require": {
-        "tarsana/functional": "~1.0"
+        "tarsana/functional": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
