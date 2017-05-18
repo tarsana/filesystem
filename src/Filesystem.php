@@ -114,7 +114,6 @@ class Filesystem implements FilesystemInterface {
             case 'file':
                 return $this->adapter->isFile($path);
             case 'dir':
-                // echo PHP_EOL, "Path from FS: {$path}", PHP_EOL;
                 return $this->adapter->isDir($path);
             case 'any':
                 return $this->adapter->fileExists($path);

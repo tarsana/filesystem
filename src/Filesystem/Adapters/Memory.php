@@ -350,10 +350,8 @@ class Memory implements Adapter {
         $filesCount = 0;
         $missing = [];
         $item = array_shift($parts);
-        $paths = [ $item ];
         foreach ($parts as $part) {
             $item .= "/{$part}";
-            $paths[] = $item;
             $node = $this->at($item);
             if ($node === null) {
                 $missing[] = $item;
