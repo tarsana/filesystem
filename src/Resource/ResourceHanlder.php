@@ -1,6 +1,6 @@
 <?php namespace Tarsana\IO\Resource;
 
-use Tarsana\IO\Exceptions\ResourceHandlerException;
+use Tarsana\IO\Exceptions\ResourceException;
 
 /**
  * Abstract class offering basic methods to handle a resource.
@@ -34,23 +34,31 @@ abstract class ResourceHanlder {
             $resource = fopen($resource, $mode);
         }
         if (!is_resource($resource) || !$this->isValid($resource)) {
-            throw new ResourceHandlerException("Invalid resource given to handler");
+            throw new ResourceException("Invalid resource given to handler");
         }
         $this->resource = $resource;
     }
 
     /**
-     * Sets blocking mode.
+     * Gets/Sets the resource blocking mode.
      *
      * @param bool $mode
-     * @return self
+     * @return self|bool
+<<<<<<< HEAD
+     * @throws Tarsana\Exceptions\IO\ResourceException
+=======
      * @throws Tarsana\IO\Exceptions\ResourceException
+>>>>>>> 121aa23... wip
      */
-    public function blocking($mode)
+    public function blocking($mode = null)
     {
-        if(stream_set_blocking($this->resource, $mode))
+        if (null === $mode) {
+            $data = stream_get_meta_data($this->resource);
+            return $data['blocked'];
+        }
+        if (stream_set_blocking($this->resource, $mode))
             return $this;
-        throw new ResourceHandlerException("Unable to set the blocking mode of resource");
+        throw new ResourceException("Unable to set the blocking mode of resource");
     }
 
     /**

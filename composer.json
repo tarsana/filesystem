@@ -1,6 +1,6 @@
 {
     "name": "tarsana/io",
-    "description": "Simple IO helper classes",
+    "description": "Tarsana IO library",
     "license": "MIT",
     "authors": [
         {
@@ -12,10 +12,6 @@
         "psr-4": {
             "Tarsana\\IO\\": "src/"
         }
-    },
-    "minimum-stability": "dev",
-    "require": {
-        "tarsana/functional": "dev-master"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"

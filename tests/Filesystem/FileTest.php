@@ -1,8 +1,9 @@
 <?php
 
+use Tarsana\IO\Filesystem;
+use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Filesystem\Directory;
 use Tarsana\IO\Filesystem\File;
-use Tarsana\IO\Filesystem;
 
 
 class FileTest extends PHPUnit_Framework_TestCase {

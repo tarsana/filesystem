@@ -1,6 +1,7 @@
 <?php namespace Tarsana\IO\Resource;
 
-use Tarsana\IO\Interfaces\ReaderInterface;
+use Tarsana\IO\Exceptions\ResourceException;
+use Tarsana\IO\Interfaces\Resource\Reader as ReaderInterface;
 
 /**
  * Reads content from a resource.
@@ -20,6 +21,49 @@ class Reader extends ResourceHanlder implements ReaderInterface {
             $count = -1;
         }
         return stream_get_contents($this->resource, $count);
+    }
+
+    /**
+     * Reads until end of line or the end of contents.
+     * Returns the read string without the end of line.
+     *
+     * @return string
+     */
+    public function readLine()
+    {
+        return $this->readUntil(PHP_EOL);
+    }
+
+    /**
+     * Reads until the given string or the end of contents.
+     * Returns the read string without the ending string.
+     *
+     * @param  string $end
+     * @return string
+     * @throws ResourceException if the given $end is empty
+     */
+    public function readUntil($end)
+    {
+        if (empty($end)) {
+            throw new ResourceException("Empty string given to Reader::readUntil()");
+        }
+        // Reading the first character (maybe blocking)
+        $buffer = stream_get_contents($this->resource, 1);
+        // saving the blocking mode
+        $mode = $this->blocking();
+        $size = strlen($end);
+        $this->blocking(false);
+        while (strlen($buffer) < $size || substr($buffer, -$size) != $end) {
+            $c = stream_get_contents($this->resource, 1);
+            if (empty($c)) {
+                break;
+            }
+            $buffer .= $c;
+        }
+        $this->blocking($mode);
+        return (substr($buffer, -$size) == $end)
+            ? substr($buffer, 0, strlen($buffer) - $size)
+            : $buffer;
     }
 
     /**
