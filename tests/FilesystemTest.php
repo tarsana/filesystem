@@ -27,7 +27,7 @@ use Tarsana\IO\Filesystem\File;
  * files.txt
  *
  */
-class LocalTest extends PHPUnit_Framework_TestCase {
+class LocalTest extends PHPUnit\Framework\TestCase {
 
     protected $fs;
 

@@ -6,7 +6,7 @@ use Tarsana\IO\Filesystem\Directory;
 use Tarsana\IO\Filesystem\File;
 
 
-class CollectionTest extends PHPUnit_Framework_TestCase {
+class CollectionTest extends PHPUnit\Framework\TestCase {
 
     protected $collection;
 

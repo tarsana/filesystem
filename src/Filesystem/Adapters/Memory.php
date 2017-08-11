@@ -31,11 +31,6 @@ class Memory implements Adapter {
         $this->files = [];
     }
 
-    public function files()
-    {
-        return $this->files;
-    }
-
     /**
      * gets or sets the file or directory at `$path`.
      *

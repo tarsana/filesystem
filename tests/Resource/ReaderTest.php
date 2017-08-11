@@ -3,7 +3,7 @@
 use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Resource\Reader;
 
-class ReaderTest extends PHPUnit_Framework_TestCase {
+class ReaderTest extends PHPUnit\Framework\TestCase {
 
     protected $reader;
 

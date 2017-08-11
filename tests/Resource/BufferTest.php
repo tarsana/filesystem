@@ -3,7 +3,7 @@
 use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Resource\Buffer;
 
-class BufferTest extends PHPUnit_Framework_TestCase {
+class BufferTest extends PHPUnit\Framework\TestCase {
 
     protected $buffer;
 

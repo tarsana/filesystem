@@ -5,7 +5,7 @@ use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Filesystem\Directory;
 
 
-class DirectoryTest extends PHPUnit_Framework_TestCase {
+class DirectoryTest extends PHPUnit\Framework\TestCase {
 
     protected $dirPath;
 

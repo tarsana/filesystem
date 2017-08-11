@@ -2,7 +2,7 @@
 use Tarsana\IO\Filesystem;
 use Tarsana\IO\Filesystem\Adapters\Memory;
 
-class MemoryTest extends PHPUnit_Framework_TestCase {
+class MemoryTest extends PHPUnit\Framework\TestCase {
 
     protected $m;
 

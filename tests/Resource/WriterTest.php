@@ -3,7 +3,7 @@
 use Tarsana\IO\Filesystem\Adapters\Local;
 use Tarsana\IO\Resource\Writer;
 
-class WriterTest extends PHPUnit_Framework_TestCase {
+class WriterTest extends PHPUnit\Framework\TestCase {
 
     protected $writer;
 
@@ -26,15 +26,16 @@ class WriterTest extends PHPUnit_Framework_TestCase {
 
     public function test_constructor()
     {
-        new Writer;
+        $out = new Writer;
+        $this->assertTrue($out instanceof Writer);
     }
 
     public function test_close()
     {
         $resource = fopen('php://memory', 'w');
-        $in = new Writer($resource);
+        $out = new Writer($resource);
         $this->assertTrue(is_resource($resource));
-        $in->close();
+        $out->close();
         $this->assertFalse(is_resource($resource));
     }
 
