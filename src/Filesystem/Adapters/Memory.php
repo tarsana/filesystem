@@ -68,7 +68,7 @@ class Memory implements Adapter {
     public function realpath($path)
     {
         $path = str_replace('\\', '/', rtrim($path, '/'));
-        if ($path[0] != '/' && (count($path) < 2 || $path[1] != ':')) {
+        if ($path[0] != '/' && (strlen($path) < 2 || $path[1] != ':')) {
             $path = getcwd() . '/' . $path;
         }
         $parts = explode('/', $path);
