@@ -25,118 +25,105 @@ interface Filesystem {
      * if there are multiple matches and 'nothing' if no match found.
      *
      * @param  string  $pattern
-     * @param  boolean $isAbsolute
      * @return string
      */
-    public function whatIs($pattern, $isAbsolute = false);
+    public function whatIs($pattern);
 
     /**
      * Checks if the given path is a file.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isFile($path, $isAbsolute = false);
+    public function isFile($path);
 
     /**
      * Checks if all the given path are files.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areFiles($paths, $areAbsolute = false);
+    public function areFiles($paths);
 
     /**
      * Checks if the given path is a directory.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isDir($path, $isAbsolute = false);
+    public function isDir($path);
 
     /**
      * Checks if all the given paths are directories.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areDirs($paths, $areAbsolute = false);
+    public function areDirs($paths);
 
     /**
      * Checks if the given path is a file or directory.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isAny($path, $isAbsolute = false);
+    public function isAny($path);
 
     /**
      * Checks if all the given paths are files or directories.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areAny($paths, $areAbsolute = false);
+    public function areAny($paths);
 
     /**
      * Checks if the given path is readable.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isReadable($path, $isAbsolute = false);
+    public function isReadable($path);
 
     /**
      * Checks if all the given paths are readable.
      *
      * @param  string  $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areReadable($paths, $areAbsolute = false);
+    public function areReadable($paths);
 
     /**
      * Checks if the given path is writable.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isWritable($path, $isAbsolute = false);
+    public function isWritable($path);
 
     /**
      * Checks if all the given paths are writable.
      *
      * @param  string  $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areWritable($paths, $areAbsolute = false);
+    public function areWritable($paths);
 
     /**
      * Checks if the given path is executable.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isExecutable($path, $isAbsolute = false);
+    public function isExecutable($path);
 
     /**
      * Checks if all the given paths are executable.
      *
      * @param  string  $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areExecutable($paths, $areAbsolute = false);
+    public function areExecutable($paths);
 
     /**
      * Gets a file by relative or absolute path,
@@ -144,12 +131,11 @@ interface Filesystem {
      *
      * @param  string  $path
      * @param  boolean $createMissing
-     * @param  boolean $isAbsolute
      * @return Tarsana\IO\Interfaces\Filesystem\File
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException
      */
-    public function file($path, $createMissing = false, $isAbsolute = false);
+    public function file($path, $createMissing = false);
 
     /**
      * Gets files by relative or absolute path,
@@ -169,12 +155,11 @@ interface Filesystem {
      *
      * @param  string  $path
      * @param  boolean $createMissing
-     * @param  boolean $isAbsolute
      * @return Tarsana\IO\Interfaces\Filesystem\Directory
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException
      */
-    public function dir($path, $createMissing = false, $isAbsolute = false);
+    public function dir($path, $createMissing = false);
 
     /**
      * Gets directories by relative or absolute path,
@@ -193,27 +178,24 @@ interface Filesystem {
      * and returns a collection containing them.
      *
      * @param  string  $pattern
-     * @param  boolean $isAbsolute
      * @return Tarsana\IO\Interfaces\Filesystem\Collection
      */
-    public function find($pattern, $isAbsolute = false);
+    public function find($pattern);
 
     /**
      * Removes a file or directory recursively.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return Tarsana\IO\Interfaces\Filesystem
      */
-    public function remove($path, $isAbsolute = false);
+    public function remove($path);
 
     /**
      * Removes an array of files or directories.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @return Tarsana\IO\Interfaces\Filesystem
      */
-    public function removeAll($paths, $areAbsolute = false);
+    public function removeAll($paths);
 
 }

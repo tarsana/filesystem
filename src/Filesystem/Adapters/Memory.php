@@ -59,6 +59,17 @@ class Memory implements Adapter {
     }
 
     /**
+     * Tells if the given path is absolute.
+     *
+     * @param  string  $path
+     * @return boolean
+     */
+    public function isAbsolute($path)
+    {
+        return substr($path, 0, 1) == '/';
+    }
+
+    /**
      * Makes the path absolute and removes '.'
      * and '..' directories from it.
      *

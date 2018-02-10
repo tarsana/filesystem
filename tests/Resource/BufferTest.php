@@ -11,7 +11,7 @@ class BufferTest extends PHPUnit\Framework\TestCase {
 
     public function setUp()
     {
-        $this->path = path(DEMO_DIR.'/temp.txt');
+        $this->path = DEMO_DIR.'/temp.txt';
         file_put_contents($this->path, "Hello World !");
         $this->buffer = new Buffer($this->path);
     }
@@ -83,7 +83,7 @@ class BufferTest extends PHPUnit\Framework\TestCase {
 
     public function tearDown()
     {
-        remove(path(DEMO_DIR.'/temp.txt'));
+        remove(DEMO_DIR.'/temp.txt');
     }
 
 }

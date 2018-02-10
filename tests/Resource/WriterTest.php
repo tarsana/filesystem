@@ -11,7 +11,7 @@ class WriterTest extends PHPUnit\Framework\TestCase {
 
     public function setUp()
     {
-        $this->path = path(DEMO_DIR.'/temp.txt');
+        $this->path = DEMO_DIR.'/temp.txt';
         file_put_contents($this->path, "");
         $this->writer = new Writer($this->path);
     }
@@ -50,7 +50,7 @@ class WriterTest extends PHPUnit\Framework\TestCase {
 
     public function tearDown()
     {
-        remove(path(DEMO_DIR.'/temp.txt'));
+        remove(DEMO_DIR.'/temp.txt');
     }
 
 }

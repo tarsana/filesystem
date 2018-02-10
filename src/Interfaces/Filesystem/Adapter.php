@@ -6,6 +6,14 @@
 interface Adapter {
 
     /**
+     * Tells if the given path is absolute.
+     *
+     * @param  string  $path
+     * @return boolean
+     */
+    public function isAbsolute($path);
+
+    /**
      * Equivalent to PHP `realpath` function.
      *
      * @param  string $path

@@ -9,7 +9,7 @@ class ReaderTest extends PHPUnit\Framework\TestCase {
 
     public function setUp()
     {
-        $path = path(DEMO_DIR.'/temp.txt');
+        $path = DEMO_DIR.'/temp.txt';
         file_put_contents($path, "Hello World !" . PHP_EOL . "How are you ?");
         $this->reader = new Reader($path);
     }
@@ -19,7 +19,7 @@ class ReaderTest extends PHPUnit\Framework\TestCase {
      */
     public function test_fails_if_not_readable()
     {
-        $writer = new Reader(fopen(path(DEMO_DIR.'/temp.txt'), 'w'));
+        $writer = new Reader(fopen(DEMO_DIR.'/temp.txt', 'w'));
     }
 
     public function test_reads_whole_content()
@@ -106,6 +106,6 @@ class ReaderTest extends PHPUnit\Framework\TestCase {
 
     public function tearDown()
     {
-        remove(path(DEMO_DIR.'/temp.txt'));
+        remove(DEMO_DIR.'/temp.txt');
     }
 }
