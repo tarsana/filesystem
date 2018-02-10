@@ -30,6 +30,25 @@ class Local implements Adapter {
      */
     private function __construct() {}
 
+    /**
+     * Tells if the given path is absolute.
+     *
+     * @param  string  $path
+     * @return boolean
+     */
+    public function isAbsolute($path)
+    {
+        $firstChar = substr($path, 0, 1);
+        if ('/' === $firstChar || '\\' === $firstChar) {
+            return true;
+        }
+        $isLetter = (
+            ($firstChar >= 'A' && $firstChar <= 'Z') ||
+            ($firstChar >= 'a' && $firstChar <= 'z')
+        );
+        $path = substr($path, 1, 2);
+        return $isLetter && (':/' === $path || ':\\' === $path);
+    }
 
     /**
      * Equivalent to PHP `realpath` function.

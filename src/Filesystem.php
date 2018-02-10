@@ -73,12 +73,11 @@ class Filesystem implements FilesystemInterface {
      * if there are multiple matches and 'nothing' if no match found.
      *
      * @param  string  $pattern
-     * @param  boolean $isAbsolute
      * @return string
      */
-    public function whatIs($pattern, $isAbsolute = false)
+    public function whatIs($pattern)
     {
-        if (! $isAbsolute) {
+        if (! $this->adapter->isAbsolute($pattern)) {
             $pattern = $this->rootPath . $pattern;
         }
 
@@ -95,13 +94,12 @@ class Filesystem implements FilesystemInterface {
      * Checks if the given path is of the given type.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @param  string  $type
      * @return boolean
      */
-    protected function is($path, $isAbsolute, $type)
+    protected function is($path, $type)
     {
-        if (! $isAbsolute) {
+        if (! $this->adapter->isAbsolute($path)) {
             $path = $this->rootPath . $path;
         }
         switch ($type) {
@@ -126,14 +124,13 @@ class Filesystem implements FilesystemInterface {
      * Checks if the given paths are all of the given type.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @param  string  $type
      * @return boolean
      */
-    protected function are($paths, $areAbsolute, $type)
+    protected function are($paths, $type)
     {
         foreach ($paths as $path) {
-            if (! $this->is($path, $areAbsolute, $type)) {
+            if (! $this->is($path, $type)) {
                 return false;
             }
         }
@@ -144,145 +141,133 @@ class Filesystem implements FilesystemInterface {
      * Checks if the given path is a file.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isFile($path, $isAbsolute = false)
+    public function isFile($path)
     {
-        return $this->is($path, $isAbsolute, 'file');
+        return $this->is($path, 'file');
     }
 
     /**
      * Checks if all the given path are files.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areFiles($paths, $areAbsolute = false)
+    public function areFiles($paths)
     {
-        return $this->are($paths, $areAbsolute, 'file');
+        return $this->are($paths, 'file');
     }
 
     /**
      * Checks if the given path is a directory.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isDir($path, $isAbsolute = false)
+    public function isDir($path)
     {
-        return $this->is($path, $isAbsolute, 'dir');
+        return $this->is($path, 'dir');
     }
 
     /**
      * Checks if all the given paths are directories.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areDirs($paths, $areAbsolute = false)
+    public function areDirs($paths)
     {
-        return $this->are($paths, $areAbsolute, 'dir');
+        return $this->are($paths, 'dir');
     }
 
     /**
      * Checks if the given path is a file or directory.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isAny($path, $isAbsolute = false)
+    public function isAny($path)
     {
-        return $this->is($path, $isAbsolute, 'any');
+        return $this->is($path, 'any');
     }
 
     /**
      * Checks if all the given paths are files or directories.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areAny($paths, $areAbsolute = false)
+    public function areAny($paths)
     {
-        return $this->are($paths, $areAbsolute, 'any');
+        return $this->are($paths, 'any');
     }
 
     /**
      * Checks if the given path is readable.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isReadable($path, $isAbsolute = false)
+    public function isReadable($path)
     {
-        return $this->is($path, $isAbsolute, 'readable');
+        return $this->is($path, 'readable');
     }
 
     /**
      * Checks if all the given paths are readable.
      *
      * @param  string  $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areReadable($paths, $areAbsolute = false)
+    public function areReadable($paths)
     {
-        return $this->are($paths, $areAbsolute, 'readable');
+        return $this->are($paths, 'readable');
     }
 
     /**
      * Checks if the given path is writable.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isWritable($path, $isAbsolute = false)
+    public function isWritable($path)
     {
-        return $this->is($path, $isAbsolute, 'writable');
+        return $this->is($path, 'writable');
     }
 
     /**
      * Checks if all the given paths are writable.
-        return $this->are($paths, $areAbsolute, 'readable');
+        return $this->are($paths, 'readable');
      *
      * @param  string  $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areWritable($paths, $areAbsolute = false)
+    public function areWritable($paths)
     {
-        return $this->are($paths, $areAbsolute, 'writable');
+        return $this->are($paths, 'writable');
     }
 
     /**
      * Checks if the given path is executable.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return boolean
      */
-    public function isExecutable($path, $isAbsolute = false)
+    public function isExecutable($path)
     {
-        return $this->is($path, $isAbsolute, 'executable');
+        return $this->is($path, 'executable');
     }
 
     /**
      * Checks if all the given paths are executable.
      *
      * @param  string  $paths
-     * @param  boolean $areAbsolute
      * @return boolean
      */
-    public function areExecutable($paths, $areAbsolute = false)
+    public function areExecutable($paths)
     {
-        return $this->are($paths, $areAbsolute, 'executable');
+        return $this->are($paths, 'executable');
     }
 
     /**
@@ -291,14 +276,13 @@ class Filesystem implements FilesystemInterface {
      *
      * @param  string  $path
      * @param  boolean $createMissing
-     * @param  boolean $isAbsolute
      * @return Tarsana\IO\Filesystem\File
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException
      */
-    public function file($path, $createMissing = false, $isAbsolute = false)
+    public function file($path, $createMissing = false)
     {
-        if (! $isAbsolute) {
+        if (! $this->adapter->isAbsolute($path)) {
             $path = $this->rootPath . $path;
         }
         if (! $createMissing && ! $this->isFile($path, true)) {
@@ -337,14 +321,13 @@ class Filesystem implements FilesystemInterface {
      *
      * @param  string  $path
      * @param  boolean $createMissing
-     * @param  boolean $isAbsolute
      * @return Tarsana\IO\Filesystem\Directory
      *
      * @throws Tarsana\IO\Exceptions\FilesystemException
      */
-    public function dir($path, $createMissing = false, $isAbsolute = false)
+    public function dir($path, $createMissing = false)
     {
-        if (! $isAbsolute) {
+        if (! $this->adapter->isAbsolute($path)) {
             $path = $this->rootPath . $path;
         }
         if (! $createMissing && ! $this->isDir($path, true)) {
@@ -381,12 +364,11 @@ class Filesystem implements FilesystemInterface {
      * and returns a collection containing them.
      *
      * @param  string  $pattern
-     * @param  boolean $isAbsolute
      * @return Tarsana\IO\Filesystem\Collection
      */
-    public function find($pattern, $isAbsolute = false)
+    public function find($pattern)
     {
-        if (! $isAbsolute) {
+        if (! $this->adapter->isAbsolute($pattern)) {
             $pattern = $this->rootPath . $pattern;
         }
         $list = new Collection;
@@ -404,12 +386,11 @@ class Filesystem implements FilesystemInterface {
      * Removes a file or directory recursively.
      *
      * @param  string  $path
-     * @param  boolean $isAbsolute
      * @return Tarsana\IO\Filesystem
      */
-    public function remove($path, $isAbsolute = false)
+    public function remove($path)
     {
-        if (! $isAbsolute) {
+        if (! $this->adapter->isAbsolute($path)) {
             $path = $this->rootPath . $path;
         }
         if ($this->isFile($path, true)) {
@@ -430,13 +411,12 @@ class Filesystem implements FilesystemInterface {
      * Removes an array of files or directories.
      *
      * @param  array   $paths
-     * @param  boolean $areAbsolute
      * @return Tarsana\IO\Filesystem
      */
-    public function removeAll($paths, $areAbsolute = false)
+    public function removeAll($paths)
     {
         foreach ($paths as $path) {
-            $this->remove($path, $areAbsolute);
+            $this->remove($path);
         }
         return $this;
     }

@@ -3,6 +3,7 @@
 [![Build Status](https://travis-ci.org/tarsana/io.svg?branch=master)](https://travis-ci.org/tarsana/io)
 [![Coverage Status](https://coveralls.io/repos/github/tarsana/io/badge.svg?branch=master)](https://coveralls.io/github/tarsana/io?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4/mini.png)](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/webneat)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/tarsana/io/blob/master/LICENSE)
 
 Simple classes to handle Input/Output operations.
@@ -29,27 +30,27 @@ $fs = new Tarsana\IO\Filesystem('path/to/fs/root/directory');
 Maybe you need to check if a specific path is a file
 
 ```php
-if ($fs->isFile('relative/path'))
+if ($fs->isFile('path'))
 ```
 
 or a directory
 
 ```php
-if ($fs->isDir('relative/path'))
+if ($fs->isDir('path'))
 ```
 
 or you just want to know it exists, no matter it's a file or directory
 
 ```php
-if ($fs->isAny('relative/path'))
+if ($fs->isAny('path'))
 ```
 
 What if you need to check multiple paths at once ?
 
 ```php
-if ($fs->areFiles(['relative/path1', 'relative/path2', 'relative/path3']))
-if ($fs->areDirs(['relative/path1', 'relative/path2', 'relative/path3']))
-if ($fs->areAny(['relative/path1', 'relative/path2', 'relative/path3']))
+if ($fs->areFiles(['path1', 'path2', 'path3']))
+if ($fs->areDirs(['path1', 'path2', 'path3']))
+if ($fs->areAny(['path1', 'path2', 'path3']))
 ```
 
 But what if you want to know the type of a path without having to do multiple checks ?
@@ -103,22 +104,22 @@ $collection->names(); // array of names of the files and directories
 Well, to handle a file, you should get it first
 
 ```php
-$file = $fs->file('relative/path/to/file');
+$file = $fs->file('path/to/file');
 ```
 
 Notice that this will throw an exception if the file is not found. If you want to create it when missing; specify `true` in the second argument
 
 ```php
-$file = $fs->file('relative/path/to/file', true);
+$file = $fs->file('path/to/file', true);
 ```
 
 You can also get or create multiple files at once
 
 ```php
 $files = $fs->files([
-	'relative/path/to/file1',
-	'relative/path/to/file2',
-	'relative/path/to/file3'
+	'path/to/file1',
+	'path/to/file2',
+	'path/to/file3'
 ]); // specify the second argument as true if you want missing files to be created
 
 foreach ($files->asArray() as $file) {
@@ -157,12 +158,12 @@ Notice that all setters return the same instance to enable call chaining.
 Just like the file, you can get a directory like that
 
 ```php
-$dir = $fs->dir('relative/path/to/dir'); // throws exception if the directory not found
-$dir = $fs->dir('relative/path/to/dir', true); // creates the directory if not found
+$dir = $fs->dir('path/to/dir'); // throws exception if the directory not found
+$dir = $fs->dir('path/to/dir', true); // creates the directory if not found
 $dirs = $fs->dirs([
-	'relative/path/to/file1',
-	'relative/path/to/file2',
-	'relative/path/to/file3'
+	'path/to/file1',
+	'path/to/file2',
+	'path/to/file3'
 ]); // a collection containing directories
 ```
 
