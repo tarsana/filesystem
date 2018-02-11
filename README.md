@@ -2,7 +2,6 @@
 
 [![Build Status](https://travis-ci.org/tarsana/filesystem.svg?branch=master)](https://travis-ci.org/tarsana/filesystem)
 [![Coverage Status](https://coveralls.io/repos/github/tarsana/filesystem/badge.svg?branch=master)](https://coveralls.io/github/tarsana/filesystem?branch=master)
-[![SensfilesystemLabsInsight](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4/mini.png)](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/webneat)
 [![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/tarsana/filesystem/blob/master/LICENSE)
 
