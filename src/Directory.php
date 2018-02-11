@@ -1,8 +1,8 @@
-<?php namespace Tarsana\IO\Filesystem;
+<?php namespace Tarsana\Filesystem;
 
-use Tarsana\IO\Interfaces\Filesystem\Directory as DirectoryInterface;
-use Tarsana\IO\Exceptions\FilesystemException;
-use Tarsana\IO\Filesystem\AbstractFile;
+use Tarsana\Filesystem\Interfaces\Directory as DirectoryInterface;
+use Tarsana\Filesystem\Exceptions\FilesystemException;
+use Tarsana\Filesystem\AbstractFile;
 
 
 class Directory extends AbstractFile implements DirectoryInterface {
@@ -20,7 +20,7 @@ class Directory extends AbstractFile implements DirectoryInterface {
     /**
      * Creates the directory if it doesn't exist.
      *
-     * @return Tarsana\IO\Filesystem\Directory
+     * @return Tarsana\Filesystem\Directory
      */
     public function create()
     {
@@ -34,7 +34,7 @@ class Directory extends AbstractFile implements DirectoryInterface {
      * Throws a FilesystemException meaning that
      * it were not possible to create the file.
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException
      */
     protected function throwUnableToCreate()
     {
@@ -55,9 +55,9 @@ class Directory extends AbstractFile implements DirectoryInterface {
      * Copies the directory to the provided destination and returns the copy.
      *
      * @param  string $dest
-     * @return Tarsana\IO\Filesystem\Directory
+     * @return Tarsana\Filesystem\Directory
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if unable to create the destination directory.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if unable to create the destination directory.
      */
     public function copyAs($dest)
     {

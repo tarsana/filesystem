@@ -1,6 +1,6 @@
-<?php namespace Tarsana\IO\Resource;
+<?php namespace Tarsana\Filesystem\Resource;
 
-use Tarsana\IO\Exceptions\ResourceException;
+use Tarsana\Filesystem\Exceptions\ResourceException;
 
 /**
  * Abstract class offering basic methods to handle a resource.
@@ -47,7 +47,7 @@ abstract class ResourceHanlder {
 <<<<<<< HEAD
      * @throws Tarsana\Exceptions\IO\ResourceException
 =======
-     * @throws Tarsana\IO\Exceptions\ResourceException
+     * @throws Tarsana\Filesystem\Exceptions\ResourceException
 >>>>>>> 121aa23... wip
      */
     public function blocking($mode = null)

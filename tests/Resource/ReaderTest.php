@@ -1,7 +1,7 @@
 <?php
 
-use Tarsana\IO\Filesystem\Adapters\Local;
-use Tarsana\IO\Resource\Reader;
+use Tarsana\Filesystem\Adapters\Local;
+use Tarsana\Filesystem\Resource\Reader;
 
 class ReaderTest extends PHPUnit\Framework\TestCase {
 
@@ -15,7 +15,7 @@ class ReaderTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\ResourceException
+     * @expectedException Tarsana\Filesystem\Exceptions\ResourceException
      */
     public function test_fails_if_not_readable()
     {
@@ -63,7 +63,7 @@ class ReaderTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\ResourceException
+     * @expectedException Tarsana\Filesystem\Exceptions\ResourceException
      */
     public function test_throws_exception_if_empty_ending_word_given()
     {

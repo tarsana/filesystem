@@ -1,4 +1,4 @@
-<?php namespace Tarsana\IO\Interfaces\Resource;
+<?php namespace Tarsana\Filesystem\Interfaces\Resource;
 
 /**
  * Reads content from a text resource.

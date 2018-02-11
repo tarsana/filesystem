@@ -1,8 +1,8 @@
-<?php namespace Tarsana\IO\Filesystem;
+<?php namespace Tarsana\Filesystem;
 
-use Tarsana\IO\Interfaces\Filesystem\File as FileInterface;
-use Tarsana\IO\Exceptions\FilesystemException;
-use Tarsana\IO\Filesystem\AbstractFile;
+use Tarsana\Filesystem\Interfaces\File as FileInterface;
+use Tarsana\Filesystem\Exceptions\FilesystemException;
+use Tarsana\Filesystem\AbstractFile;
 
 
 class File extends AbstractFile implements FileInterface {
@@ -40,7 +40,7 @@ class File extends AbstractFile implements FileInterface {
      * Throws a FilesystemException meaning that
      * it were not possible to create the file.
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException
      */
     protected function throwUnableToCreate()
     {
@@ -63,7 +63,7 @@ class File extends AbstractFile implements FileInterface {
      * @param  string $dest
      * @return self
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if unable to create the destination file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if unable to create the destination file.
      */
     public function copyAs($dest)
     {
@@ -104,7 +104,7 @@ class File extends AbstractFile implements FileInterface {
      * @param  string $content
      * @return self
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if unable to append the content.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if unable to append the content.
      */
     public function append($content)
     {

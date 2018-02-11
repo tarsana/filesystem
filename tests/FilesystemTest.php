@@ -1,9 +1,9 @@
 <?php
-use Tarsana\IO\Filesystem;
-use Tarsana\IO\Filesystem\Adapters\Local;
-use Tarsana\IO\Filesystem\Collection;
-use Tarsana\IO\Filesystem\Directory;
-use Tarsana\IO\Filesystem\File;
+use Tarsana\Filesystem\Filesystem;
+use Tarsana\Filesystem\Adapters\Local;
+use Tarsana\Filesystem\Collection;
+use Tarsana\Filesystem\Directory;
+use Tarsana\Filesystem\File;
 
 /**
  * This uses the directory tests/demo as testing filesystem.
@@ -37,7 +37,7 @@ class LocalTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     * @expectedException Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function test_throws_exception_if_root_directory_not_found()
     {
@@ -172,7 +172,7 @@ class LocalTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     * @expectedException Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function test_throws_exception_if_file_not_found()
     {
@@ -180,7 +180,7 @@ class LocalTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     * @expectedException Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function test_throws_exception_if_directory_not_found()
     {

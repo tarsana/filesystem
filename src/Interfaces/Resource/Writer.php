@@ -1,4 +1,4 @@
-<?php namespace Tarsana\IO\Interfaces\Resource;
+<?php namespace Tarsana\Filesystem\Interfaces\Resource;
 
 /**
  * Writes content into a text resource.

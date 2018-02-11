@@ -1,6 +1,6 @@
-<?php namespace Tarsana\IO\Filesystem\Adapters;
+<?php namespace Tarsana\Filesystem\Adapters;
 
-use Tarsana\IO\Interfaces\Filesystem\Adapter;
+use Tarsana\Filesystem\Interfaces\Adapter;
 
 
 class Memory implements Adapter {

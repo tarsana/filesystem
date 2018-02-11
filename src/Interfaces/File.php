@@ -1,4 +1,4 @@
-<?php namespace Tarsana\IO\Interfaces\Filesystem;
+<?php namespace Tarsana\Filesystem\Interfaces;
 
 
 interface File extends AbstractFile {
@@ -14,7 +14,7 @@ interface File extends AbstractFile {
      * Gets or sets the content of the file.
      *
      * @param  string $content
-     * @return string|Tarsana\IO\Filesystem\File
+     * @return string|Tarsana\Filesystem\File
      */
     public function content($content = false);
 
@@ -22,9 +22,9 @@ interface File extends AbstractFile {
      * Appends a content to the file.
      *
      * @param  string $content
-     * @return Tarsana\IO\Filesystem\File
+     * @return Tarsana\Filesystem\File
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if unable to append the content.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if unable to append the content.
      */
     public function append($content);
 
@@ -32,7 +32,7 @@ interface File extends AbstractFile {
      * Gets or sets the file extension.
      *
      * @param  string $extension
-     * @return string|Tarsana\IO\Filesystem\File
+     * @return string|Tarsana\Filesystem\File
      */
 
     public function extension($extension = false);

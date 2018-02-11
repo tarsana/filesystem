@@ -1,7 +1,7 @@
-<?php namespace Tarsana\IO\Resource;
+<?php namespace Tarsana\Filesystem\Resource;
 
-use Tarsana\IO\Exceptions\ResourceException;
-use Tarsana\IO\Interfaces\Resource\Reader as ReaderInterface;
+use Tarsana\Filesystem\Exceptions\ResourceException;
+use Tarsana\Filesystem\Interfaces\Resource\Reader as ReaderInterface;
 
 /**
  * Reads content from a resource.

@@ -1,11 +1,11 @@
-<?php namespace Tarsana\IO\Filesystem;
+<?php namespace Tarsana\Filesystem;
 
 
-use Tarsana\IO\Filesystem;
-use Tarsana\IO\Filesystem\Adapters\Local;
-use Tarsana\IO\Interfaces\Filesystem\Adapter;
-use Tarsana\IO\Exceptions\FilesystemException;
-use Tarsana\IO\Interfaces\Filesystem\AbstractFile as AbstractFileInterface;
+use Tarsana\Filesystem\Filesystem;
+use Tarsana\Filesystem\Adapters\Local;
+use Tarsana\Filesystem\Interfaces\Adapter;
+use Tarsana\Filesystem\Exceptions\FilesystemException;
+use Tarsana\Filesystem\Interfaces\AbstractFile as AbstractFileInterface;
 
 
 abstract class AbstractFile implements AbstractFileInterface {
@@ -22,7 +22,7 @@ abstract class AbstractFile implements AbstractFileInterface {
      * if this is directory and poiting to the
      * parent directory if this is a file.
      *
-     * @var Tarsana\IO\Interfaces\Filesystem
+     * @var Tarsana\Filesystem\Interfaces
      */
     protected $fs;
 
@@ -30,7 +30,7 @@ abstract class AbstractFile implements AbstractFileInterface {
      * The filesystem adapter. It defines the low-level functions
      * like (fopen, mkdir, ...) for the targeted filesystem.
      *
-     * @var Tarsana\IO\Interfaces\Filesystem\Adapter
+     * @var Tarsana\Filesystem\Interfaces\Adapter
      */
     protected $adapter;
 
@@ -77,9 +77,9 @@ abstract class AbstractFile implements AbstractFileInterface {
      *
      * @param  string $value
      * @param  boolean $overwrite
-     * @return string|Tarsana\IO\Filesystem\AbstractFile
+     * @return string|Tarsana\Filesystem\AbstractFile
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if invalid name given or could not rename the file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if invalid name given or could not rename the file.
      */
     public function name($value = false, $overwrite = false)
     {
@@ -102,9 +102,9 @@ abstract class AbstractFile implements AbstractFileInterface {
      *
      * @param  string $value
      * @param  boolean $overwrite
-     * @return string|Tarsana\IO\Filesystem\AbstractFile
+     * @return string|Tarsana\Filesystem\AbstractFile
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if could not rename the file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if could not rename the file.
      */
     public function path($value = false, $overwrite = false)
     {
@@ -176,9 +176,9 @@ abstract class AbstractFile implements AbstractFileInterface {
      * Gets or Sets the file permissions.
      *
      * @param  int $value
-     * @return string|Tarsana\IO\Filesystem\AbstractFile
+     * @return string|Tarsana\Filesystem\AbstractFile
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if could not apply permissions to file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if could not apply permissions to file.
      */
     public function perms($value = false)
     {
@@ -198,7 +198,7 @@ abstract class AbstractFile implements AbstractFileInterface {
     /**
      * Gets the filesystem coresponding to the file.
      *
-     * @return Tarsana\IO\Filesystem
+     * @return Tarsana\Filesystem
      */
     public function fs()
     {
@@ -237,7 +237,7 @@ abstract class AbstractFile implements AbstractFileInterface {
     /**
      * Creates the file if it doesn't exist.
      *
-     * @return Tarsana\IO\Filesystem\AbstractFile
+     * @return Tarsana\Filesystem\AbstractFile
      */
     public abstract function create();
 
@@ -245,9 +245,9 @@ abstract class AbstractFile implements AbstractFileInterface {
      * Throws a FilesystemException meaning that
      * it were not possible to create the file.
      *
-     * @return Tarsana\IO\Filesystem\AbstractFile
+     * @return Tarsana\Filesystem\AbstractFile
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException
      */
     protected abstract function throwUnableToCreate();
 
@@ -262,9 +262,9 @@ abstract class AbstractFile implements AbstractFileInterface {
      * Copies the file to the provided destination and returns the copy.
      *
      * @param  string $dest
-     * @return Tarsana\IO\Filesystem\AbstractFile
+     * @return Tarsana\Filesystem\AbstractFile
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if unable to create the destination file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if unable to create the destination file.
      */
     public abstract function copyAs($dest);
 

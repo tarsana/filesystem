@@ -1,9 +1,9 @@
 <?php
 
-use Tarsana\IO\Filesystem;
-use Tarsana\IO\Filesystem\Adapters\Local;
-use Tarsana\IO\Filesystem\Directory;
-use Tarsana\IO\Filesystem\File;
+use Tarsana\Filesystem\Filesystem;
+use Tarsana\Filesystem\Adapters\Local;
+use Tarsana\Filesystem\Directory;
+use Tarsana\Filesystem\File;
 
 
 class FileTest extends PHPUnit\Framework\TestCase {
@@ -28,7 +28,7 @@ class FileTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     * @expectedException Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function test_throws_exception_when_directory_exists_with_same_path()
     {
@@ -62,7 +62,7 @@ class FileTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     * @expectedException Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function test_throws_exception_when_already_exists_path()
     {
@@ -87,7 +87,7 @@ class FileTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     * @expectedException Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function test_throws_exception_when_invalid_name()
     {

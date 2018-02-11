@@ -1,7 +1,7 @@
-<?php namespace Tarsana\IO\Resource;
+<?php namespace Tarsana\Filesystem\Resource;
 
-use Tarsana\IO\Interfaces\Resource\Writer as WriterInterface;
-use Tarsana\IO\Exceptions\ResourceException;
+use Tarsana\Filesystem\Interfaces\Resource\Writer as WriterInterface;
+use Tarsana\Filesystem\Exceptions\ResourceException;
 
 /**
  * Writes content to a resource.

@@ -1,3 +1,3 @@
-<?php namespace Tarsana\IO\Exceptions;
+<?php namespace Tarsana\Filesystem\Exceptions;
 
 class ResourceException extends \Exception {}

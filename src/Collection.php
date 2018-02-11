@@ -1,8 +1,8 @@
-<?php namespace Tarsana\IO\Filesystem;
+<?php namespace Tarsana\Filesystem;
 
-use Tarsana\IO\Interfaces\Filesystem\Collection as CollectionInterface;
-use Tarsana\IO\Interfaces\Filesystem\Directory as DirectoryInterface;
-use Tarsana\IO\Interfaces\Filesystem\File as FileInterface;
+use Tarsana\Filesystem\Interfaces\Collection as CollectionInterface;
+use Tarsana\Filesystem\Interfaces\Directory as DirectoryInterface;
+use Tarsana\Filesystem\Interfaces\File as FileInterface;
 
 class Collection implements CollectionInterface {
 
@@ -32,7 +32,7 @@ class Collection implements CollectionInterface {
      * Adds new items to the collection. If an
      * item already exists It will be ignored.
      *
-     * @param Tarsana\IO\Interfaces\Filesystem\AbstractFile|array $item
+     * @param Tarsana\Filesystem\Interfaces\AbstractFile|array $item
      * @return self
      */
     public function add($item)
@@ -139,7 +139,7 @@ class Collection implements CollectionInterface {
     /**
      * Returns the first item or null if the collection is empty.
      *
-     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile|null
+     * @return Tarsana\Filesystem\Interfaces\AbstractFile|null
      */
     public function first()
     {
@@ -153,7 +153,7 @@ class Collection implements CollectionInterface {
     /**
      * Returns the last item or null if the collection is empty.
      *
-     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile|null
+     * @return Tarsana\Filesystem\Interfaces\AbstractFile|null
      */
     public function last()
     {
@@ -188,7 +188,7 @@ class Collection implements CollectionInterface {
      * Gets a file or directory by path.
      *
      * @param  string $path
-     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile
+     * @return Tarsana\Filesystem\Interfaces\AbstractFile
      */
     public function get($path)
     {

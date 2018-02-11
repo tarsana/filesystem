@@ -1,19 +1,19 @@
-# Tarsana I/O Package
+# Tarsana Filesystem Package
 
-[![Build Status](https://travis-ci.org/tarsana/io.svg?branch=master)](https://travis-ci.org/tarsana/io)
-[![Coverage Status](https://coveralls.io/repos/github/tarsana/io/badge.svg?branch=master)](https://coveralls.io/github/tarsana/io?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4/mini.png)](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4)
+[![Build Status](https://travis-ci.org/tarsana/filesystem.svg?branch=master)](https://travis-ci.org/tarsana/filesystem)
+[![Coverage Status](https://coveralls.io/repos/github/tarsana/filesystem/badge.svg?branch=master)](https://coveralls.io/github/tarsana/filesystem?branch=master)
+[![SensfilesystemLabsInsight](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4/mini.png)](https://insight.sensiolabs.com/projects/63923f3f-955d-4058-bbd0-4730639709d4)
 [![Donate](https://img.shields.io/badge/Donate-PayPal-green.svg)](https://paypal.me/webneat)
-[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/tarsana/io/blob/master/LICENSE)
+[![Software License](https://img.shields.io/badge/license-MIT-brightgreen.svg?style=flat)](https://github.com/tarsana/filesystem/blob/master/LICENSE)
 
-Simple classes to handle Input/Output operations.
+Simple classes to handle Filesystem operations.
 
 ## Installation
 
 Install it using composer
 
 ```
-composer require tarsana/io
+composer require tarsana/filesystem
 ```
 
 ## Handeling Files and Directories
@@ -22,7 +22,7 @@ The `Filesystem` class was designed to be used easily and support call chaining 
 
 ```php
 // Create a Filesystem instance given a root path
-$fs = new Tarsana\IO\Filesystem('path/to/fs/root/directory');
+$fs = new Tarsana\Filesystem('path/to/fs/root/directory');
 ```
 
 ### Checking Paths
@@ -189,7 +189,7 @@ Notice that all setters return the same instance to enable call chaining.
 
 ### Writer
 
-`Tarsana\IO\Resource\Writer` gives the possibility to write content to any resource.
+`Tarsana\Filesystem\Resource\Writer` gives the possibility to write content to any resource.
 
 ```php
 // Default constructor uses STDOUT by default
@@ -213,7 +213,7 @@ $out->close();
 
 ### Reader
 
-`Tarsana\IO\Resources\Reader` gives the possibility to read content from any resource. Constructors are the same as `Writer` but the default resource is `STDIN`.
+`Tarsana\Filesystem\Resources\Reader` gives the possibility to read content from any resource. Constructors are the same as `Writer` but the default resource is `STDIN`.
 
 ```php
 $stdin = new Reader; // when no parameter is given, it uses STDIN by default
@@ -229,4 +229,4 @@ $stdin->blocking(false)->read();
 
 ### Buffer
 
-`Tarsana\IO\Resource\Buffer` is a Reader and Writer at the same time. If no resource is given, it uses `php://memory` to store content.
+`Tarsana\Filesystem\Resource\Buffer` is a Reader and Writer at the same time. If no resource is given, it uses `php://memory` to store content.

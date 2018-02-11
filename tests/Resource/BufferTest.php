@@ -1,7 +1,7 @@
 <?php
 
-use Tarsana\IO\Filesystem\Adapters\Local;
-use Tarsana\IO\Resource\Buffer;
+use Tarsana\Filesystem\Adapters\Local;
+use Tarsana\Filesystem\Resource\Buffer;
 
 class BufferTest extends PHPUnit\Framework\TestCase {
 
@@ -74,7 +74,7 @@ class BufferTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\ResourceException
+     * @expectedException Tarsana\Filesystem\Exceptions\ResourceException
      */
     public function test_throws_exception_if_empty_ending_word_given()
     {

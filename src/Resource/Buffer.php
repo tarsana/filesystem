@@ -1,7 +1,7 @@
-<?php namespace Tarsana\IO\Resource;
+<?php namespace Tarsana\Filesystem\Resource;
 
-use Tarsana\IO\Interfaces\Resource\Buffer as BufferInterface;
-use Tarsana\IO\Exceptions\ResourceException;
+use Tarsana\Filesystem\Interfaces\Resource\Buffer as BufferInterface;
+use Tarsana\Filesystem\Exceptions\ResourceException;
 
 /**
  * Reads and writes content from/to a resource.

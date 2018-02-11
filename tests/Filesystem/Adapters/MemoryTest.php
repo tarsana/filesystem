@@ -1,6 +1,6 @@
 <?php
-use Tarsana\IO\Filesystem;
-use Tarsana\IO\Filesystem\Adapters\Memory;
+use Tarsana\Filesystem\Filesystem;
+use Tarsana\Filesystem\Adapters\Memory;
 
 class MemoryTest extends PHPUnit\Framework\TestCase {
 

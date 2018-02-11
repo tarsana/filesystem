@@ -1,4 +1,4 @@
-<?php namespace Tarsana\IO\Interfaces\Filesystem;
+<?php namespace Tarsana\Filesystem\Interfaces;
 
 /**
  * Filesystem adapter: defines the low level functions for a specific filesystem

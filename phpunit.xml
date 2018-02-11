@@ -19,7 +19,7 @@
         </whitelist>
     </filter>
     <testsuites>
-        <testsuite name="Tarsana IO Test Suite">
+        <testsuite name="Tarsana Filesystem Test Suite">
             <directory>./tests/</directory>
         </testsuite>
     </testsuites>

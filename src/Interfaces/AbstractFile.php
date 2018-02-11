@@ -1,4 +1,4 @@
-<?php namespace Tarsana\IO\Interfaces\Filesystem;
+<?php namespace Tarsana\Filesystem\Interfaces;
 
 interface AbstractFile {
 
@@ -18,7 +18,7 @@ interface AbstractFile {
      * @param  boolean $overwrite
      * @return string|self
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if invalid name given or could not rename the file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if invalid name given or could not rename the file.
      */
     public function name($value = false, $overwrite = false);
 
@@ -29,7 +29,7 @@ interface AbstractFile {
      * @param  boolean $overwrite
      * @return string|self
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if could not rename the file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if could not rename the file.
      */
     public function path($value = false, $overwrite = false);
 
@@ -57,14 +57,14 @@ interface AbstractFile {
      * @param  int $value
      * @return string|self
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if could not apply permissions to file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if could not apply permissions to file.
      */
     public function perms($value = false);
 
     /**
      * Gets the filesystem coresponding to the file.
      *
-     * @return Tarsana\IO\Interfaces\Filesystem
+     * @return Tarsana\Filesystem\Interfaces
      */
     public function fs();
 
@@ -85,7 +85,7 @@ interface AbstractFile {
     /**
      * Creates the file if it doesn't exist.
      *
-     * @return Tarsana\IO\Filesystem\AbstractFile
+     * @return Tarsana\Filesystem\AbstractFile
      */
     public function create();
 
@@ -93,9 +93,9 @@ interface AbstractFile {
      * Copies the file to the provided destination and returns the copy.
      *
      * @param  string $dest
-     * @return Tarsana\IO\Filesystem\AbstractFile
+     * @return Tarsana\Filesystem\AbstractFile
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException if unable to create the destination file.
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException if unable to create the destination file.
      */
     public function copyAs($dest);
 

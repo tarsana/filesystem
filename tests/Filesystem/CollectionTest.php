@@ -1,9 +1,9 @@
 <?php
 
-use Tarsana\IO\Filesystem\Adapters\Local;
-use Tarsana\IO\Filesystem\Collection;
-use Tarsana\IO\Filesystem\Directory;
-use Tarsana\IO\Filesystem\File;
+use Tarsana\Filesystem\Adapters\Local;
+use Tarsana\Filesystem\Collection;
+use Tarsana\Filesystem\Directory;
+use Tarsana\Filesystem\File;
 
 
 class CollectionTest extends PHPUnit\Framework\TestCase {

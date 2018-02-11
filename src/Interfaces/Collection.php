@@ -1,4 +1,4 @@
-<?php namespace Tarsana\IO\Interfaces\Filesystem;
+<?php namespace Tarsana\Filesystem\Interfaces;
 
 interface Collection {
 
@@ -6,7 +6,7 @@ interface Collection {
      * Adds new items to the collection. If an
      * item already exists It will be ignored.
      *
-     * @param Tarsana\IO\Interfaces\Filesystem\AbstractFile|array $item
+     * @param Tarsana\Filesystem\Interfaces\AbstractFile|array $item
      * @return self
      */
     public function add($item);
@@ -61,14 +61,14 @@ interface Collection {
     /**
      * Returns the first item or null if the collection is empty.
      *
-     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile|null
+     * @return Tarsana\Filesystem\Interfaces\AbstractFile|null
      */
     public function first();
 
     /**
      * Returns the last item or null if the collection is empty.
      *
-     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile|null
+     * @return Tarsana\Filesystem\Interfaces\AbstractFile|null
      */
     public function last();
 
@@ -90,7 +90,7 @@ interface Collection {
      * Gets a file or directory by path.
      *
      * @param  string $path
-     * @return Tarsana\IO\Interfaces\Filesystem\AbstractFile
+     * @return Tarsana\Filesystem\Interfaces\AbstractFile
      */
     public function get($path);
 
@@ -98,7 +98,7 @@ interface Collection {
      * Removes a file or directory from the collection.
      *
      * @param  string $path
-     * @return Tarsana\IO\Interfaces\Filesystem\Collection
+     * @return Tarsana\Filesystem\Interfaces\Collection
      */
     public function remove($path);
 

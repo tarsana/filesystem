@@ -1,4 +1,4 @@
-<?php namespace Tarsana\IO\Interfaces;
+<?php namespace Tarsana\Filesystem\Interfaces;
 
 /**
  * Finds and handles files and directories within a root directory.
@@ -15,7 +15,7 @@ interface Filesystem {
     /**
      * Gets the filesystem adapter.
      *
-     * @return Tarsana\IO\Interfaces\Filesystem\Adapter
+     * @return Tarsana\Filesystem\Interfaces\Adapter
      */
     public function adapter();
 
@@ -131,9 +131,9 @@ interface Filesystem {
      *
      * @param  string  $path
      * @param  boolean $createMissing
-     * @return Tarsana\IO\Interfaces\Filesystem\File
+     * @return Tarsana\Filesystem\Interfaces\File
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function file($path, $createMissing = false);
 
@@ -143,9 +143,9 @@ interface Filesystem {
      *
      * @param  array   $paths
      * @param  boolean $createMissing
-     * @return Tarsana\IO\Interfaces\Filesystem\Collection
+     * @return Tarsana\Filesystem\Interfaces\Collection
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function files($paths = false, $createMissing = false);
 
@@ -155,9 +155,9 @@ interface Filesystem {
      *
      * @param  string  $path
      * @param  boolean $createMissing
-     * @return Tarsana\IO\Interfaces\Filesystem\Directory
+     * @return Tarsana\Filesystem\Interfaces\Directory
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function dir($path, $createMissing = false);
 
@@ -167,9 +167,9 @@ interface Filesystem {
      *
      * @param  array   $paths
      * @param  boolean $createMissing
-     * @return Tarsana\IO\Interfaces\Filesystem\Collection
+     * @return Tarsana\Filesystem\Interfaces\Collection
      *
-     * @throws Tarsana\IO\Exceptions\FilesystemException
+     * @throws Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function dirs($paths = false, $createMissing = false);
 
@@ -178,7 +178,7 @@ interface Filesystem {
      * and returns a collection containing them.
      *
      * @param  string  $pattern
-     * @return Tarsana\IO\Interfaces\Filesystem\Collection
+     * @return Tarsana\Filesystem\Interfaces\Collection
      */
     public function find($pattern);
 
@@ -186,7 +186,7 @@ interface Filesystem {
      * Removes a file or directory recursively.
      *
      * @param  string  $path
-     * @return Tarsana\IO\Interfaces\Filesystem
+     * @return Tarsana\Filesystem\Interfaces
      */
     public function remove($path);
 
@@ -194,7 +194,7 @@ interface Filesystem {
      * Removes an array of files or directories.
      *
      * @param  array   $paths
-     * @return Tarsana\IO\Interfaces\Filesystem
+     * @return Tarsana\Filesystem\Interfaces
      */
     public function removeAll($paths);
 

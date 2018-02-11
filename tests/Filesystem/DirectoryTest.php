@@ -1,8 +1,8 @@
 <?php
 
-use Tarsana\IO\Filesystem;
-use Tarsana\IO\Filesystem\Adapters\Local;
-use Tarsana\IO\Filesystem\Directory;
+use Tarsana\Filesystem\Filesystem;
+use Tarsana\Filesystem\Adapters\Local;
+use Tarsana\Filesystem\Directory;
 
 
 class DirectoryTest extends PHPUnit\Framework\TestCase {
@@ -28,7 +28,7 @@ class DirectoryTest extends PHPUnit\Framework\TestCase {
     }
 
     /**
-     * @expectedException Tarsana\IO\Exceptions\FilesystemException
+     * @expectedException Tarsana\Filesystem\Exceptions\FilesystemException
      */
     public function test_throws_exception_when_cannot_create_the_directory()
     {

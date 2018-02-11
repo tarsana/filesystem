@@ -1,6 +1,6 @@
 {
-    "name": "tarsana/io",
-    "description": "Tarsana IO library",
+    "name": "tarsana/filesystem",
+    "description": "Tarsana Filesystem library",
     "license": "MIT",
     "authors": [
         {
@@ -10,8 +10,11 @@
     ],
     "autoload": {
         "psr-4": {
-            "Tarsana\\IO\\": "src/"
+            "Tarsana\\Filesystem\\": "src/"
         }
+    },
+    "require": {
+        "php": "^7.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^6.3"
